@@ -10,31 +10,27 @@
     <div class="container">
         <h1>Procesador de Datos</h1>
 
-        <!-- Subir archivo Excel -->
+        <!-- Inputs para cargar archivo y configurar -->
         <div class="form-group">
             <label for="file-input">Archivo Excel:</label>
             <input type="file" id="file-input" accept=".xlsx, .xls">
         </div>
 
-        <!-- Nombre de la columna -->
         <div class="form-group">
             <label for="column-name-input">Nombre de la Columna:</label>
             <input type="text" id="column-name-input" placeholder="Ej: Edad, Categoría, Calificaciones">
         </div>
 
-        <!-- Nombre del archivo de la tabla -->
         <div class="form-group">
             <label for="table-filename">Nombre del Archivo de la Tabla:</label>
             <input type="text" id="table-filename" placeholder="Ej: tabla_frecuencia">
         </div>
 
-        <!-- Nombre del archivo de la imagen -->
         <div class="form-group">
             <label for="image-filename">Nombre del Archivo de la Imagen:</label>
             <input type="text" id="image-filename" placeholder="Ej: grafico_frecuencia">
         </div>
 
-        <!-- Tipo de variable -->
         <div class="form-group">
             <label for="variable-type">Tipo de Variable:</label>
             <select id="variable-type">
@@ -47,10 +43,8 @@
         <!-- Botón para procesar -->
         <button id="process-data-btn">Procesar Datos</button>
 
-        <!-- Resultados -->
+        <!-- Resultados: Tabla y Gráfico -->
         <div id="results"></div>
-
-        <!-- Contenedor del gráfico -->
         <canvas id="frequency-chart" style="display: none; margin-top: 20px;"></canvas>
     </div>
 
@@ -59,7 +53,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <!-- Cargar el módulo principal -->
+    <!-- Script principal -->
     <script type="module" src="scripts/main.js"></script>
 </body>
 </html>
