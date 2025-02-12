@@ -5,29 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Procesador de Datos</title>
     <link rel="stylesheet" href="style/main.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+
 </head>
 <body>
+    <header>
+        <div class="logo">
+            <img src="./assets/icons/FORGE_FINL.png" alt="Forge Company Logo">
+            <p class="titlee">DataViz Excel</p>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">Inicio</a></li>
+                <li><a href="#">Explorar</a></li>
+                <li><a href="#">Contacto</a></li>
+            </ul>
+        </nav>
+        <div class="buttons">
+            <button class="signup">Registrarse</button>
+        </div>
+    </header>
+
     <div class="container">
         <h1>Procesador de Datos</h1>
 
         <!-- Inputs para cargar archivo y configurar -->
         <div class="form-group">
-            <label for="file-input">Archivo Excel:</label>
+            <label for="file-input">Carga archivo Excel:</label>
             <input type="file" id="file-input" accept=".xlsx, .xls">
         </div>
 
         <div class="form-group">
             <label for="column-name-input">Nombre de la Columna:</label>
-            <input type="text" id="column-name-input" placeholder="Ej: Edad, Categoría, Calificaciones">
+            <input type="text" id="column-name-input" placeholder="Ej: rendimiento, cultivo, radio">
         </div>
 
         <div class="form-group">
-            <label for="table-filename">Nombre del Archivo de la Tabla:</label>
+            <label for="table-filename">Guardar tabla como:</label>
             <input type="text" id="table-filename" placeholder="Ej: tabla_frecuencia">
         </div>
 
         <div class="form-group">
-            <label for="image-filename">Nombre del Archivo de la Imagen:</label>
+            <label for="image-filename">Guardar imagen como:</label>
             <input type="text" id="image-filename" placeholder="Ej: grafico_frecuencia">
         </div>
 
@@ -41,8 +62,10 @@
         </div>
 
         <!-- Botón para procesar -->
-        <button id="process-data-btn">Procesar Datos</button>
+       <div class="procesar">
+        <button  id="process-data-btn">Procesar Datos</button>
 
+       </div>
         <!-- Resultados: Tabla y Gráfico -->
         <div id="results"></div>
         <canvas id="frequency-chart" style="display: none; margin-top: 20px;"></canvas>
