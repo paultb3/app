@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Frecuencia</title>
+    <link rel="stylesheet" href="style/main.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Calculadora de Tablas de Frecuencia</h1>
+        
+        <label for="data-input">Introduce tus datos (separados por comas):</label>
+        <input type="text" id="data-input" placeholder="Ej: 5, 10, 15, 20, 20">
+
+        <label for="variable-type">Selecciona el tipo de variable:</label>
+        <select id="variable-type">
+            <option value="cualitativa">Cualitativa</option>
+            <option value="cuantitativa_discreta">Cuantitativa Discreta</option>
+            <option value="cuantitativa_continua">Cuantitativa Continua</option>
+        </select>
+
+        <button id="calculate-btn">Calcular</button>
+        <button id="export-excel-btn">Exportar a Excel</button>
+        <button id="export-image-btn">Exportar como Imagen</button>
+
+        <div id="results"></div>
+    </div>
+
+    <script src="scripts/main.js"></script>
+</body>
+</html>
