@@ -20,9 +20,9 @@
 
 ## 📷 Vistas
 
-| 💻 Vista Escritorio                           | 📱 Vista Móvil                                |
-| --------------------------------------------- | --------------------------------------------- |
-| ![Escritorio](./assets/images/escritorio.png) | ![Móvil](https://via.placeholder.com/150x250) |
+| 💻 Vista Escritorio                           | 📱 Vista Móvil                         |
+| --------------------------------------------- | -------------------------------------- |
+| ![Escritorio](./assets/images/escritorio.png) | ![Móvil](./assets/images/mobile.jpeg/) |
 
 ---
 
@@ -41,4 +41,11 @@
 ```bash
 https://paultb3.github.io/app
 
+
 ```
+
+---
+
+## NOTA
+
+- Es necesario implementar diseño responsivo par la version mobile
