@@ -225,10 +225,14 @@ button:hover {
 
 @media (max-width: 768px) {
     header {
-        padding: 10px 15px;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
+    font-size: 1.25rem; /* 20px */
+    padding: 8px 20px;
+        
+    }
+    .container {
+        width: 95%;
+        padding: 16px;
+        margin: clamp(20px, 5vw, 50px) auto;
     }
 
     .logo {
@@ -236,7 +240,7 @@ button:hover {
         align-items: center;
         justify-content: center;
         width: 100%;
-        margin-bottom: 10px;
+        margin-bottom: 1.5px;
     }
 
     .logo img {
@@ -245,9 +249,9 @@ button:hover {
     }
 
     .logo p {
-        font-size: 18px;
+        font-size: 1rem;
         margin-top: 0;
-        margin-left: 10px;
+        margin-left: 2px;
     }
 
     .menu-toggle {
@@ -262,6 +266,20 @@ button:hover {
         right: 15px;
         z-index: 1001;
     }
+
+    .signup {
+        margin-left: 2rem;
+        font-size: 1rem;
+        background: #e60023;
+        color: white;
+        padding: 10px;
+    }
+    
+    .signup:hover {
+        background: #b8001b;
+    }
+    
+    
 
     .menu-toggle i {
         color: #333;
@@ -311,5 +329,13 @@ button:hover {
     .procesar {
         max-width: 90%;
         padding: 15px;
+    }
+    label {
+        font-size: 1rem;
+        font-family: 'Poppins', sans-serif;
+    }
+    input {
+        font-size: 1rem;
+        font-family: 'Poppins', sans-serif;
     }
 }
