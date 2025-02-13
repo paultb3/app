@@ -51,6 +51,22 @@ function processDiscreteOrQualitativeData(dataArray, variableType) {
     return { result, totalFrequency };
 }
 
+function escogerPrecision() {
+    let select = document.getElementById("amount-type");
+    let valorSeleccionado = select.value;
+
+    if (valorSeleccionado === "uno_decimal") {
+        return 1;
+    } else if (valorSeleccionado === "dos_decimal") {
+        return 2;
+    } else if (valorSeleccionado === "tres_decimal") {
+        return 3;
+    } else {
+        return 0; // Retorna 0 si la opción no es válida
+    }
+}
+
+
 // Procesar variables cuantitativas continuas con intervalos
 function processContinuousData(dataArray) {
     const numericData = dataArray.map(Number).filter(item => !isNaN(item));
@@ -60,7 +76,8 @@ function processContinuousData(dataArray) {
 
     const n = numericData.length;
     const k = Math.ceil(1 + 3.322 * Math.log10(n)); // Regla de Sturges
-    const intervalWidth = parseFloat((range / k).toFixed(2));
+    let decimal = 'variable-type'
+    const intervalWidth = parseFloat((range / k).toFixed(escogerPrecision()));
 
     const intervals = [];
     let start = min;
