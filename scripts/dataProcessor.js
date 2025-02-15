@@ -1,8 +1,30 @@
+import {
+    calcularMedia,
+    calcularMediana,
+    calcularModa,
+    calcularMediaArmonica,
+    calcularMediaGeometrica,
+    calcularVarianza,
+    calcularDesviacionEstandar,
+    calcularCoeficienteVariacion
+} from './statsCalculator.js';
+
 export function processData(dataArray, variableType) {
     if (variableType === 'cuantitativa_continua') {
-        return processContinuousData(dataArray);
+        const processedData = processContinuousData(dataArray);
+        return {
+            ...processedData,
+            estadisticas: calcularEstadisticas(dataArray.map(item => parseFloat(item)).filter(item => !isNaN(item)))
+        };
     } else {
-        return processDiscreteOrQualitativeData(dataArray, variableType);
+        const processedData = processDiscreteOrQualitativeData(dataArray, variableType);
+        if (variableType === 'cuantitativa_discreta') {
+            return {
+                ...processedData,
+                estadisticas: calcularEstadisticas(dataArray.map(item => parseFloat(item)).filter(item => !isNaN(item)))
+            };
+        }
+        return processedData;
     }
 }
 
@@ -132,4 +154,17 @@ function processContinuousData(dataArray) {
     });
 
     return { result, totalFrequency: n };
+}
+
+function calcularEstadisticas(numeros) {
+    return {
+        media: calcularMedia(numeros),
+        mediana: calcularMediana(numeros),
+        moda: calcularModa(numeros),
+        mediaArmonica: calcularMediaArmonica(numeros),
+        mediaGeometrica: calcularMediaGeometrica(numeros),
+        varianza: calcularVarianza(numeros),
+        desviacionEstandar: calcularDesviacionEstandar(numeros),
+        coeficienteVariacion: calcularCoeficienteVariacion(numeros)
+    };
 }

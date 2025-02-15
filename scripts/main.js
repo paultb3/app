@@ -20,10 +20,11 @@ document.getElementById('process-data-btn').addEventListener('click', async () =
         // Leer y procesar el archivo Excel
         const excelData = await readExcelFile(file);
         const columnData = getColumnDataByName(excelData, columnName);
-        const { result, totalFrequency } = processData(columnData, variableType);
+        const processedData = processData(columnData, variableType);
+        const { result, totalFrequency, estadisticas } = processedData;
 
-        // Mostrar la tabla y el gráfico en la página
-        displayResults(result, totalFrequency, variableType);
+        // Mostrar la tabla de frecuencias y estadísticas en la página
+        displayResults(result, totalFrequency, variableType, estadisticas);
         generateChart(result, variableType);
 
         // Exportar tabla y gráfico
@@ -35,7 +36,7 @@ document.getElementById('process-data-btn').addEventListener('click', async () =
 });
 
 // Función para mostrar la tabla en la página
-function displayResults(data, totalFrequency, variableType) {
+function displayResults(data, totalFrequency, variableType, estadisticas) {
     const resultsDiv = document.getElementById('results');
     resultsDiv.innerHTML = '';  // Limpiar resultados previos
 
@@ -60,6 +61,26 @@ function displayResults(data, totalFrequency, variableType) {
         headerRow.appendChild(th);
     });
     table.appendChild(headerRow);
+
+    // Nueva tabla de estadísticas
+    if (estadisticas) {
+        const statsDiv = document.createElement('div');
+        statsDiv.id = "stats-results";
+        statsDiv.innerHTML = `
+            <h3>Medidas Estadisticas</h3>
+            <table>
+                <tr><td>Media:</td><td>${estadisticas.media.toFixed(2)}</td></tr>
+                <tr><td>Mediana:</td><td>${estadisticas.mediana.toFixed(2)}</td></tr>
+                <tr><td>Moda:</td><td>${estadisticas.moda.join(', ')}</td></tr>
+                <tr><td>Media Armónica:</td><td>${estadisticas.mediaArmonica.toFixed(2)}</td></tr>
+                <tr><td>Media Geométrica:</td><td>${estadisticas.mediaGeometrica.toFixed(2)}</td></tr>
+                <tr><td>Varianza:</td><td>${estadisticas.varianza.toFixed(2)}</td></tr>
+                <tr><td>Desviación Estándar:</td><td>${estadisticas.desviacionEstandar.toFixed(2)}</td></tr>
+                <tr><td>Coeficiente de Variación (%):</td><td>${estadisticas.coeficienteVariacion.toFixed(2)}%</td></tr>
+            </table>
+        `;
+        resultsDiv.appendChild(statsDiv);
+    }
 
     // Insertar los datos en la tabla
     data.forEach(row => {

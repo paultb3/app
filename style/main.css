@@ -114,10 +114,20 @@ button {
     background: #d0d0d0;
 }
 
+/*Boton de registro*/
+
 .signup {
+    width: 100%;
+    padding: 8px 16px;
     background: #e60023;
     color: white;
     padding: 10px;
+    text-decoration: none;
+    font-size: 18px;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    margin-right: 2rem;
+    
 }
 
 .signup:hover {
@@ -191,6 +201,7 @@ button:hover {
     background-color: #45a049;
 }
 
+/*Estilos de la tabla de frecuencias*/
 #results {
     margin-top: 30px;
     overflow-x: auto;
@@ -217,10 +228,78 @@ button:hover {
     background-color: #f2f2f2;
 }
 
+#results tr:hover{
+    background-color: #C8F1CC;
+}
+
 #frequency-chart {
     margin-top: 30px;
     width: 100%;
     height: 400px;
+}
+
+
+/* Estilos para la tabla de estadísticas */
+
+#stats-results {
+    margin: 10px auto;
+    border-radius: 20px;
+    margin-bottom: 40px;
+    width: 60%;
+}
+#stats-results h3 {
+    border-top-left-radius: 10px;  /* Esquina superior izquierda */
+    border-top-right-radius: 10px; /* Esquina superior derecha */
+    background-color: #4CAF50 ;
+    padding: 6px;
+    text-align: center;
+    font-size: 20px;
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 0px;
+    color: #ffff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#stats-results table {
+    border-radius: 12px;
+    margin: 0px auto;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+    background: white;
+}
+
+#stats-results th, #stats-results td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-left: 20px;
+    text-align: left;
+}
+
+#stats-results th {
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+}
+
+#stats-results tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#stats-results tr:hover {
+    background-color: #C8F1CC;
+}
+
+#stats-results td:first-child {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Efecto de sombra y bordes suaves */
+#stats-results table {
+    border-radius: 0px;
+    overflow: hidden;
 }
 
 @media (max-width: 768px) {
@@ -337,5 +416,17 @@ button:hover {
     input {
         font-size: 1rem;
         font-family: 'Poppins', sans-serif;
+    }
+
+    #stats-results {
+        width: 95%;
+    }
+
+    #stats-results h3 {
+        font-size: 18px;
+    }
+
+    #stats-results table {
+        font-size: 14px;
     }
 }
