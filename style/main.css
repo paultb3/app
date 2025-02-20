@@ -53,14 +53,14 @@ header {
 }
 
 .logo p {
-    margin-top: 25px;
-    font-size: 20px;
+    margin-top: 10px;
+    font-size: 18px;
     font-family: 'Poppins', sans-serif;
 }
 
 .logo img {
-    height: 80px;
-    width: 80px;
+    height: 45px;
+    width: 45px;
     padding: 0;
     margin: 0;
 }
@@ -121,9 +121,9 @@ button {
     padding: 8px 16px;
     background: #e60023;
     color: white;
-    padding: 10px;
+    padding: 6px;
     text-decoration: none;
-    font-size: 18px;
+    font-size: 16px;
     border-radius: 8px;
     font-family: 'Poppins', sans-serif;
     margin-right: 2rem;
