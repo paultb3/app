@@ -83,10 +83,12 @@ function escogerPrecision() {
         return 2;
     } else if (valorSeleccionado === "tres_decimal") {
         return 3;
-    } else {
-        return 0; // Retorna 0 si la opción no es válida
+    }else if(valorSeleccionado==="entero"){
+        return 0;
     }
 }
+
+Math.round(13.7,)
 
 
 // Procesar variables cuantitativas continuas con intervalos
@@ -97,9 +99,10 @@ function processContinuousData(dataArray) {
     const range = max - min;
 
     const n = numericData.length;
-    const k = Math.ceil(1 + 3.322 * Math.log10(n)); // Regla de Sturges
+    const k = Math.round(1 + 3.322 * Math.log10(n)); // Regla de Sturges
     let decimal = 'variable-type'
-    const intervalWidth = parseFloat((range / k).toFixed(escogerPrecision()));
+    const intervalWidth = parseFloat((range / k));
+    intervalWidth.toFixed(escogerPrecision());
 
     const intervals = [];
     let start = min;
@@ -114,6 +117,11 @@ function processContinuousData(dataArray) {
             frequency: 0 
         });
         start = end;
+
+    console.log(min);
+    console.log(max);
+    console.log(n);
+    console.log(k);
     }
 
     numericData.forEach(value => {
