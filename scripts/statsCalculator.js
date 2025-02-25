@@ -31,7 +31,7 @@ export function calcularModa(numeros) {
 }
 
 export function calcularMediaArmonica(numeros) {
-    if (numeros.length === 0 || numeros.some(num => num <= 0)) {
+    if (numeros.length === 0 ) {
         throw new Error("La media armónica no se puede calcular con valores negativos o ceros.");
     }
     const sumaInversa = numeros.reduce((acc, num) => acc + (1 / num), 0);
