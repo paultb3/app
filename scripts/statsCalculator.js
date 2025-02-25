@@ -39,7 +39,7 @@ export function calcularMediaArmonica(numeros) {
 }
 
 export function calcularMediaGeometrica(numeros) {
-    if (numeros.length === 0 || numeros.some(num => num <= 0)) {
+    if (numeros.length === 0) {
         throw new Error("La media geométrica no se puede calcular con valores negativos o ceros.");
     }
     
