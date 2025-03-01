@@ -2,6 +2,7 @@ import { processData } from './dataProcessor.js';
 import { exportToExcelWithName, exportAsImageWithName } from './fileExporter.js';
 import { readExcelFile, getColumnDataByName } from './excelHandler.js';
 import { generateChart } from './chartGenerator.js';
+import { calcularMedia} from './statsCalculator.js'
 
 // Evento principal para procesar los datos
 document.getElementById('process-data-btn').addEventListener('click', async () => {
@@ -30,6 +31,18 @@ document.getElementById('process-data-btn').addEventListener('click', async () =
         // Exportar tabla y gráfico
         exportToExcelWithName(tableFileName);
         exportAsImageWithName(imageFileName);
+        console.log('asdasdasdas');
+        console.log(estadisticas);
+        console.log('-------------------------------------------------');
+        console.log(result);
+        for(let i = 0; i< result.length; i++){
+            console.log(result[i]['xi']);
+            console.log(result[i]['frequency']);
+            
+
+        }
+
+    
     } catch (error) {
         alert(error.message);
     }

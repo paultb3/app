@@ -1,6 +1,9 @@
 export function calcularMedia(numeros) {
     if (numeros.length === 0) throw new Error("El array no puede estar vacío.");
-    const suma = numeros.reduce((a, b) => a + b, 0);
+    let suma = 0;
+    for(let i=0;i<numeros.length;i++){
+        suma += numeros['fi']*numeros['frequency'];
+    }
     return suma / numeros.length;
 }
 
