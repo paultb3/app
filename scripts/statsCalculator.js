@@ -1,17 +1,28 @@
+import { calculosDeMedia } from "./operaciones.js";
+
+
 export function calcularMedia(numeros) {
     if (numeros.length === 0) throw new Error("El array no puede estar vacío.");
+
     let suma = 0;
+    let totalFrecuecnia = 0;
+
     for(let i=0;i<numeros.length;i++){
-        suma += numeros['fi']*numeros['frequency'];
+        suma += numeros[i].xi * numeros[i].frequency;
+        totalFrecuecnia += numeros[i].frequency ;
     }
-    return suma / numeros.length;
+
+    if ( totalFrecuecnia=== 0) throw new Error("La suma de frecuencias no puede ser cero.");
+
+    return parseFloat((suma / totalFrecuecnia).toFixed(4));
 }
 
 export function calcularMediana(numeros) {
     if (numeros.length === 0) throw new Error("El array no puede estar vacío.");
-    const ordenados = [...numeros].sort((a, b) => a - b);
-    const mitad = Math.floor(ordenados.length / 2);
-    return ordenados.length % 2 === 0 ? (ordenados[mitad - 1] + ordenados[mitad]) / 2 : ordenados[mitad];
+    
+    let encontrarParImpar = calculosDeMedia(numeros).parImpar;
+    const datosOrdenados = calculosDeMedia(numeros).extraerArray;
+    
 }
 
 export function calcularModa(numeros) {

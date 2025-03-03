@@ -10,18 +10,20 @@ import {
 } from './statsCalculator.js';
 
 export function processData(dataArray, variableType) {
+
+
     if (variableType === 'cuantitativa_continua') {
         const processedData = processContinuousData(dataArray);
         return {
             ...processedData,
-            estadisticas: calcularEstadisticas(dataArray.map(item => parseFloat(item)).filter(item => !isNaN(item)))
+            estadisticas: calcularEstadisticas(processedData.result)
         };
     } else {
         const processedData = processDiscreteOrQualitativeData(dataArray, variableType);
         if (variableType === 'cuantitativa_discreta') {
             return {
                 ...processedData,
-                estadisticas: calcularEstadisticas(dataArray.map(item => parseFloat(item)).filter(item => !isNaN(item)))
+                estadisticas: calcularEstadisticas(dataArray.map(item => parseFloat(item)).filter(item => !isNaN(item)).result)
             };
         }
         return processedData;

@@ -2,7 +2,7 @@ import { processData } from './dataProcessor.js';
 import { exportToExcelWithName, exportAsImageWithName } from './fileExporter.js';
 import { readExcelFile, getColumnDataByName } from './excelHandler.js';
 import { generateChart } from './chartGenerator.js';
-import { calcularMedia} from './statsCalculator.js'
+
 
 // Evento principal para procesar los datos
 document.getElementById('process-data-btn').addEventListener('click', async () => {
@@ -31,17 +31,7 @@ document.getElementById('process-data-btn').addEventListener('click', async () =
         // Exportar tabla y gráfico
         exportToExcelWithName(tableFileName);
         exportAsImageWithName(imageFileName);
-        console.log('asdasdasdas');
-        console.log(estadisticas);
-        console.log('-------------------------------------------------');
-        console.log(result);
-        for(let i = 0; i< result.length; i++){
-            console.log(result[i]['xi']);
-            console.log(result[i]['frequency']);
-            
-
-        }
-
+    
     
     } catch (error) {
         alert(error.message);
@@ -82,14 +72,14 @@ function displayResults(data, totalFrequency, variableType, estadisticas) {
         statsDiv.innerHTML = `
             <h3>Medidas Estadisticas</h3>
             <table>
-                <tr><td>Media:</td><td>${estadisticas.media.toFixed(2)}</td></tr>
-                <tr><td>Mediana:</td><td>${estadisticas.mediana.toFixed(2)}</td></tr>
+                <tr><td>Media:</td><td>${estadisticas.media.toFixed(4)}</td></tr>
+                <tr><td>Mediana:</td><td>${estadisticas.mediana.toFixed(4)}</td></tr>
                 <tr><td>Moda:</td><td>${estadisticas.moda.join(', ')}</td></tr>
-                <tr><td>Media Armónica:</td><td>${estadisticas.mediaArmonica.toFixed(2)}</td></tr>
-                <tr><td>Media Geométrica:</td><td>${estadisticas.mediaGeometrica.toFixed(2)}</td></tr>
-                <tr><td>Varianza:</td><td>${estadisticas.varianza.toFixed(2)}</td></tr>
-                <tr><td>Desviación Estándar:</td><td>${estadisticas.desviacionEstandar.toFixed(2)}</td></tr>
-                <tr><td>Coeficiente de Variación (%):</td><td>${estadisticas.coeficienteVariacion.toFixed(2)}%</td></tr>
+                <tr><td>Media Armónica:</td><td>${estadisticas.mediaArmonica.toFixed(4)}</td></tr>
+                <tr><td>Media Geométrica:</td><td>${estadisticas.mediaGeometrica.toFixed(4)}</td></tr>
+                <tr><td>Varianza:</td><td>${estadisticas.varianza.toFixed(4)}</td></tr>
+                <tr><td>Desviación Estándar:</td><td>${estadisticas.desviacionEstandar.toFixed(4)}</td></tr>
+                <tr><td>Coeficiente de Variación (%):</td><td>${estadisticas.coeficienteVariacion.toFixed(4)}%</td></tr>
             </table>
         `;
         resultsDiv.appendChild(statsDiv);
