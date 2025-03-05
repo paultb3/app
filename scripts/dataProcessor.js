@@ -76,20 +76,8 @@ function processDiscreteOrQualitativeData(dataArray, variableType) {
 }
 
 function escogerPrecision() {
-    let select = document.getElementById("amount-type");
-    let valorSeleccionado = select.value;
-
-    if (valorSeleccionado === "uno-decimales") {
-        return 1;
-    } else if (valorSeleccionado === "dos-decimales") {
-        return 2;
-    } else if (valorSeleccionado === "tres-decimales") {
-        return 3;
-    }else if(valorSeleccionado === "cuatro-decimales"){
-        return 4;
-    }else if(valorSeleccionado==="entero"){
-        return 0;
-    }
+    let select = parseInt(document.getElementById("presicion").value);
+    return select
 }
 
 // Procesar variables cuantitativas continuas con intervalos
@@ -112,9 +100,9 @@ function processContinuousData(dataArray) {
         const end = start + intervalWidth;
         intervals.push({ 
             m: i + 1,
-            Li: start.toFixed(2),
-            Ls: end.toFixed(2),
-            xi: ((start + end) / 2).toFixed(3),
+            Li: start.toFixed(escogerPrecision()),
+            Ls: end.toFixed(escogerPrecision()),
+            xi: ((start + end) / 2).toFixed(escogerPrecision()),
             frequency: 0 
         });
         start = end;
@@ -150,10 +138,10 @@ function processContinuousData(dataArray) {
             xi: interval.xi,
             frequency: interval.frequency,
             cumulativeFrequency,
-            relativeFrequency: relativeFrequency.toFixed(4),
-            cumulativeRelativeFrequency: cumulativeRelativeFrequency.toFixed(4),
-            percentage: (relativeFrequency * 100).toFixed(2),
-            cumulativePercentage: (cumulativeRelativeFrequency * 100).toFixed(2)
+            relativeFrequency: relativeFrequency.toFixed(escogerPrecision()),
+            cumulativeRelativeFrequency: cumulativeRelativeFrequency.toFixed(escogerPrecision()),
+            percentage: (relativeFrequency * 100).toFixed(escogerPrecision()),
+            cumulativePercentage: (cumulativeRelativeFrequency * 100).toFixed(escogerPrecision())
         };
     });
 
@@ -162,8 +150,8 @@ function processContinuousData(dataArray) {
 
 function calcularEstadisticas(numeros) {
     return {
-        media: calcularMedia(numeros),
-        mediana: calcularMediana(numeros),
+        media: calcularMedia(numeros, escogerPrecision()),
+        mediana: calcularMediana(numeros, escogerPrecision()),
         moda: calcularModa(numeros),
         mediaArmonica: calcularMediaArmonica(numeros),
         mediaGeometrica: calcularMediaGeometrica(numeros),
@@ -171,4 +159,19 @@ function calcularEstadisticas(numeros) {
         desviacionEstandar: calcularDesviacionEstandar(numeros),
         coeficienteVariacion: calcularCoeficienteVariacion(numeros)
     };
+}
+
+// Capturar el elemento select de precisión
+const precisionSelect = document.getElementById("precisionSelect");
+
+// Función para actualizar la precisión de los datos sin recalcular
+function actualizarPrecision() {
+    let precision = parseInt(precisionSelect.value); // Obtener precisión elegida
+
+    // Formatear valores con la nueva precisión
+    document.getElementById("media").textContent = estadisticas.media.toFixed(precision);
+    document.getElementById("mediana").textContent = estadisticas.mediana.toFixed(precision);
+    document.getElementById("moda").textContent = estadisticas.moda.toFixed(precision);
+    document.getElementById("mediaArmonica").textContent = estadisticas.mediaArmonica.toFixed(precision);
+    document.getElementById("mediaGeometrica").textContent = estadisticas.mediaGeometrica.toFixed(precision);
 }

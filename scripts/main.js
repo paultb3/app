@@ -53,8 +53,8 @@ function displayResults(data, totalFrequency, variableType, estadisticas) {
 
     // Encabezados según el tipo de variable
     const headers = (variableType === 'cuantitativa_continua') 
-        ? ['Clase (m)', 'Li', 'Ls', 'Marca de Clase (xi)', 'Frecuencia (fi)', 'Frecuencia Acumulada (Fi)', 
-           'Frecuencia Relativa (hi)', 'Frecuencia Relativa Acumulada (Hi)', 'Porcentaje (%)', 'Porcentaje Acumulado (%)']
+        ? ['Clase (mi)', 'Li', 'Ls', 'Marca de Clase (xi)', 'Frecuencia absoluta simple (fi)', 'Frecuencia Absoluta Acumulada (Fi)', 
+           'Frecuencia Relativa (hi)', 'Frecuencia Relativa Acumulada (Hi)', 'Frecuencia Relativa Porcentual (hi%)', 'Frecuencia Relativa Porcentual acumulada (Hi%)']
         : ['Valor', 'Frecuencia (f)', 'Frecuencia Acumulada (F)', 'Frecuencia Relativa (fr)', 
            'Frecuencia Relativa Acumulada (Fr)', 'Porcentaje (%)', 'Porcentaje Acumulado (%)'];
 
@@ -70,10 +70,10 @@ function displayResults(data, totalFrequency, variableType, estadisticas) {
         const statsDiv = document.createElement('div');
         statsDiv.id = "stats-results";
         statsDiv.innerHTML = `
-            <h3>Medidas Estadisticas</h3>
+            <h3>Medidas Estadísticas</h3>
             <table>
-                <tr><td>Media:</td><td>${estadisticas.media.toFixed(4)}</td></tr>
-                <tr><td>Mediana:</td><td>${estadisticas.mediana.toFixed(4)}</td></tr>
+                <tr><td>Media:</td><td>${estadisticas.media}</td></tr>
+                <tr><td>Mediana:</td><td>${estadisticas.mediana}</td></tr>
                 <tr><td>Moda:</td><td>${estadisticas.moda.join(', ')}</td></tr>
                 <tr><td>Media Armónica:</td><td>${estadisticas.mediaArmonica.toFixed(4)}</td></tr>
                 <tr><td>Media Geométrica:</td><td>${estadisticas.mediaGeometrica.toFixed(4)}</td></tr>
@@ -81,9 +81,35 @@ function displayResults(data, totalFrequency, variableType, estadisticas) {
                 <tr><td>Desviación Estándar:</td><td>${estadisticas.desviacionEstandar.toFixed(4)}</td></tr>
                 <tr><td>Coeficiente de Variación (%):</td><td>${estadisticas.coeficienteVariacion.toFixed(4)}%</td></tr>
             </table>
+            <button id="descargarExcel">Descargar Excel</button>
         `;
+    
         resultsDiv.appendChild(statsDiv);
+    
+        // Evento del botón para descargar en Excel
+        document.getElementById("descargarExcel").addEventListener("click", function() {
+            const datos = [
+                ["Medida", "Valor"],
+                ["Media", estadisticas.media],
+                ["Mediana", estadisticas.mediana],
+                ["Moda", estadisticas.moda.join(', ')],
+                ["Media Armónica", estadisticas.mediaArmonica.toFixed(4)],
+                ["Media Geométrica", estadisticas.mediaGeometrica.toFixed(4)],
+                ["Varianza", estadisticas.varianza.toFixed(4)],
+                ["Desviación Estándar", estadisticas.desviacionEstandar.toFixed(4)],
+                ["Coeficiente de Variación (%)", estadisticas.coeficienteVariacion.toFixed(4)]
+            ];
+    
+            // Crear un libro de Excel
+            const wb = XLSX.utils.book_new();
+            const ws = XLSX.utils.aoa_to_sheet(datos); // Convertir array a hoja
+            XLSX.utils.book_append_sheet(wb, ws, "Estadísticas");
+    
+            // Guardar el archivo Excel
+            XLSX.writeFile(wb, "Estadisticas.xlsx");
+        });
     }
+    
 
     // Insertar los datos en la tabla
     data.forEach(row => {

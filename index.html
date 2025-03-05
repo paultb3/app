@@ -44,14 +44,18 @@
         </div>
 
         <div class="form-group">
-            <label for="amount-type">Presicion</label>
-            <select id="amount-type">
-                <option value="entero">entero</option>
-                <option value="uno-decimales">1 decimal</option>
-                <option value="dos-decimales">2 decimales</option>
-                <option value="tres-decimales">3 decimales</option>
-                <option value="cuatro-decimales"> 4 decimales</option>
+            <label for="variable-type">Tipo de Variable:</label>
+            <select id="variable-type">
+                <option value="cualitativa">Cualitativa</option>
+                <option value="cuantitativa_discreta">Cuantitativa Discreta</option>
+                <option value="cuantitativa_continua">Cuantitativa Continua</option>
             </select>
+        </div>
+
+        <div class="form-group">
+            <label for="presicion">Presicion</label>
+            <input class="presicion" type="number" id="presicion" min="0" max="10" value="0">
+        
         </div>
 
 
@@ -65,15 +69,6 @@
             <input type="text" id="image-filename" placeholder="Ej: grafico_frecuencia">
         </div>
 
-        <div class="form-group">
-            <label for="variable-type">Tipo de Variable:</label>
-            <select id="variable-type">
-                <option value="cualitativa">Cualitativa</option>
-                <option value="cuantitativa_discreta">Cuantitativa Discreta</option>
-                <option value="cuantitativa_continua">Cuantitativa Continua</option>
-            </select>
-        </div>
-
         <!-- Botón para procesar -->
        <div class="procesar">
         <button  id="process-data-btn">Procesar Datos</button>
@@ -82,10 +77,14 @@
        <hr>
         <!-- Resultados: Tabla y Gráfico -->
         <div id="results"></div>
+        <div id="stats-results"></div> <!-- Aquí se mostrarán las estadísticas -->
+        
+        <button id="descargarExcel" style="display: none;">Descargar Excel</button>
         <canvas id="frequency-chart" style="display: none; margin-top: 20px;"></canvas>
     </div>
 
     <!-- Librerías externas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

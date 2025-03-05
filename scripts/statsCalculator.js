@@ -1,7 +1,4 @@
-import { calculosDeMedia } from "./operaciones.js";
-
-
-export function calcularMedia(numeros) {
+export function calcularMedia(numeros, precision) {
     if (numeros.length === 0) throw new Error("El array no puede estar vacío.");
 
     let suma = 0;
@@ -14,15 +11,31 @@ export function calcularMedia(numeros) {
 
     if ( totalFrecuecnia=== 0) throw new Error("La suma de frecuencias no puede ser cero.");
 
-    return parseFloat((suma / totalFrecuecnia).toFixed(4));
+    return parseFloat((suma / totalFrecuecnia).toFixed(precision));
 }
 
-export function calcularMediana(numeros) {
+export function calcularMediana(numeros,precision) {
     if (numeros.length === 0) throw new Error("El array no puede estar vacío.");
+
+    let total = numeros.reduce((acc, element) => acc + element.frequency, 0);
+    let size = total % 2 === 0 ? total / 2 : (total + 1) / 2;
+
+    for(let i = 0;i<numeros.length;i++){
+        let media = 0;
+        let Li = Number(numeros[i].Li); // Convertir a número
+        let Ls = Number(numeros[i].Ls); // Convertir a número
+        let frecuencia = numeros[i].frequency;
+        let amplitud = Ls - Li;
+        
+        if(size<numeros[i].cumulativeFrequency){
+            
+            let anteriorCF = i> 0? numeros[i-1].cumulativeFrequency : 0;
+            media = Li + (size - anteriorCF)/frecuencia*amplitud;
     
-    let encontrarParImpar = calculosDeMedia(numeros).parImpar;
-    const datosOrdenados = calculosDeMedia(numeros).extraerArray;
-    
+            return parseFloat(media.toFixed(precision));
+            break;
+        }
+     }
 }
 
 export function calcularModa(numeros) {

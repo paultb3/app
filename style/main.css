@@ -160,8 +160,13 @@ label {
     margin-bottom: 5px;
     font-size: 18px;
 }
-input{
-    background-color: red;
+
+.presicion{
+    width: 60px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    padding: 5px;
 }
 
 input[type="text"],
