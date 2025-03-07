@@ -196,10 +196,44 @@ button {
     cursor: pointer;
     transition: background 0.3s;
 }
-.procesar{
+
+#div-de-botones{
     max-width: 300px;
     padding: 20px;
     margin: 10px auto;
+}
+
+#div-botones-click{
+    width: 85%;
+    margin: 0px auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 2px;
+    padding: 10px;
+}
+
+#div-botones-click button {
+    font-size: 12px;
+    padding: 5px;
+    margin: 10px 50px;
+    border: none;
+}
+
+/* Botón de Descargar Excel */
+.btn-descargar-excel,.btn-descargar-grafico {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.btn-descargar-excel:hover, .btn-descargar-grafico:hover  {
+    background-color: #45A049;
+}
+
+.btn-cargar-denuevo{
+    background-color: #2196F3;
+}
+.btn-cargar-denuevo:hover{
+    background-color:#1976D2;
 }
 
 button:hover {
@@ -308,6 +342,18 @@ button:hover {
 }
 
 @media (max-width: 768px) {
+
+    
+    
+#div-botones-click{
+    width: 80%;
+    margin: 0px auto;
+    background-color: red;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
     header {
     font-size: 1.25rem; /* 20px */
     padding: 8px 20px;
@@ -434,4 +480,42 @@ button:hover {
     #stats-results table {
         font-size: 14px;
     }
+}
+
+ /* Estilos para el contenedor de carga */
+ #loading-overlay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    display: none; /* Oculto por defecto */
+    z-index: 1000;
+    transform: translate(-50%, -50%);
+}
+
+
+/* GIF de carga o animación con CSS */
+.spinner {
+    width: 100px;
+    height: 100px;
+    border: 8px solid rgba(255, 255, 255, 0.3);
+    border-top: 8px solid #ffffff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

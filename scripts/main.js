@@ -2,10 +2,14 @@ import { processData } from './dataProcessor.js';
 import { exportToExcelWithName, exportAsImageWithName } from './fileExporter.js';
 import { readExcelFile, getColumnDataByName } from './excelHandler.js';
 import { generateChart } from './chartGenerator.js';
+import { mostrarBotonDeProcesar } from './mostrarBotones.js';
+import { medidasDeTendeciCentral } from './mostrarResultados.js';
 
 
 // Evento principal para procesar los datos
 document.getElementById('process-data-btn').addEventListener('click', async () => {
+    const startTime = performance.now(); // Captura el tiempo de inicio
+    const loadingOverlay = document.getElementById("loading-overlay");
     const file = document.getElementById('file-input').files[0];
     const columnName = document.getElementById('column-name-input').value.trim();
     const tableFileName = document.getElementById('table-filename').value.trim() || 'tabla_frecuencia';
@@ -18,23 +22,33 @@ document.getElementById('process-data-btn').addEventListener('click', async () =
     }
 
     try {
+
+        loadingOverlay.style.display = "flex";
+        
+        mostrarBotonDeProcesar();
         // Leer y procesar el archivo Excel
         const excelData = await readExcelFile(file);
         const columnData = getColumnDataByName(excelData, columnName);
+
         const processedData = processData(columnData, variableType);
         const { result, totalFrequency, estadisticas } = processedData;
+
+        const endTime = performance.now();
+        const elapsedTime = endTime - startTime;
 
         // Mostrar la tabla de frecuencias y estadísticas en la página
         displayResults(result, totalFrequency, variableType, estadisticas);
         generateChart(result, variableType);
 
-        // Exportar tabla y gráfico
-        exportToExcelWithName(tableFileName);
-        exportAsImageWithName(imageFileName);
+        await new Promise(resolve => setTimeout(resolve, Math.max(elapsedTime, 500)));
+
+
     
     
     } catch (error) {
         alert(error.message);
+    } finally{
+        loadingOverlay.style.display = "none";
     }
 });
 
@@ -54,9 +68,9 @@ function displayResults(data, totalFrequency, variableType, estadisticas) {
     // Encabezados según el tipo de variable
     const headers = (variableType === 'cuantitativa_continua') 
         ? ['Clase (mi)', 'Li', 'Ls', 'Marca de Clase (xi)', 'Frecuencia absoluta simple (fi)', 'Frecuencia Absoluta Acumulada (Fi)', 
-           'Frecuencia Relativa (hi)', 'Frecuencia Relativa Acumulada (Hi)', 'Frecuencia Relativa Porcentual (hi%)', 'Frecuencia Relativa Porcentual acumulada (Hi%)']
+           'Frecuencia Relativa (hi)', 'Frecuencia Relativa Acumulada (Hi)', 'Frecuencia Relativa Porcentual (hi%)', 'Frecuencia Relativa Acumulada Porcentual (Hi%)']
         : ['Valor', 'Frecuencia (f)', 'Frecuencia Acumulada (F)', 'Frecuencia Relativa (fr)', 
-           'Frecuencia Relativa Acumulada (Fr)', 'Porcentaje (%)', 'Porcentaje Acumulado (%)'];
+        'Frecuencia Relativa Acumulada (Fr)', 'Frecuencia Relativa Porcentual (%)', 'Frecuencia Relativa Porcentual Acumulada (%)'];
 
     headers.forEach(header => {
         const th = document.createElement('th');
@@ -67,23 +81,9 @@ function displayResults(data, totalFrequency, variableType, estadisticas) {
 
     // Nueva tabla de estadísticas
     if (estadisticas) {
-        const statsDiv = document.createElement('div');
-        statsDiv.id = "stats-results";
-        statsDiv.innerHTML = `
-            <h3>Medidas Estadísticas</h3>
-            <table>
-                <tr><td>Media:</td><td>${estadisticas.media}</td></tr>
-                <tr><td>Mediana:</td><td>${estadisticas.mediana}</td></tr>
-                <tr><td>Moda:</td><td>${estadisticas.moda.join(', ')}</td></tr>
-                <tr><td>Media Armónica:</td><td>${estadisticas.mediaArmonica.toFixed(4)}</td></tr>
-                <tr><td>Media Geométrica:</td><td>${estadisticas.mediaGeometrica.toFixed(4)}</td></tr>
-                <tr><td>Varianza:</td><td>${estadisticas.varianza.toFixed(4)}</td></tr>
-                <tr><td>Desviación Estándar:</td><td>${estadisticas.desviacionEstandar.toFixed(4)}</td></tr>
-                <tr><td>Coeficiente de Variación (%):</td><td>${estadisticas.coeficienteVariacion.toFixed(4)}%</td></tr>
-            </table>
-            <button id="descargarExcel">Descargar Excel</button>
-        `;
-    
+
+        //importamos la  tabal de medidas de tendecia central
+        const statsDiv = medidasDeTendeciCentral(estadisticas);
         resultsDiv.appendChild(statsDiv);
     
         // Evento del botón para descargar en Excel

@@ -23,7 +23,6 @@ export function processData(dataArray, variableType) {
         if (variableType === 'cuantitativa_discreta') {
             return {
                 ...processedData,
-                estadisticas: calcularEstadisticas(dataArray.map(item => parseFloat(item)).filter(item => !isNaN(item)).result)
             };
         }
         return processedData;
@@ -153,25 +152,11 @@ function calcularEstadisticas(numeros) {
         media: calcularMedia(numeros, escogerPrecision()),
         mediana: calcularMediana(numeros, escogerPrecision()),
         moda: calcularModa(numeros),
-        mediaArmonica: calcularMediaArmonica(numeros),
-        mediaGeometrica: calcularMediaGeometrica(numeros),
-        varianza: calcularVarianza(numeros),
-        desviacionEstandar: calcularDesviacionEstandar(numeros),
-        coeficienteVariacion: calcularCoeficienteVariacion(numeros)
+        mediaArmonica: calcularMediaArmonica(numeros, escogerPrecision()),
+        mediaGeometrica: calcularMediaGeometrica(numeros, escogerPrecision()),
+        varianza: calcularVarianza(numeros, escogerPrecision()),
+        desviacionEstandar: calcularDesviacionEstandar(numeros, escogerPrecision()),
+        coeficienteVariacion: calcularCoeficienteVariacion(numeros, escogerPrecision())
     };
 }
 
-// Capturar el elemento select de precisión
-const precisionSelect = document.getElementById("precisionSelect");
-
-// Función para actualizar la precisión de los datos sin recalcular
-function actualizarPrecision() {
-    let precision = parseInt(precisionSelect.value); // Obtener precisión elegida
-
-    // Formatear valores con la nueva precisión
-    document.getElementById("media").textContent = estadisticas.media.toFixed(precision);
-    document.getElementById("mediana").textContent = estadisticas.mediana.toFixed(precision);
-    document.getElementById("moda").textContent = estadisticas.moda.toFixed(precision);
-    document.getElementById("mediaArmonica").textContent = estadisticas.mediaArmonica.toFixed(precision);
-    document.getElementById("mediaGeometrica").textContent = estadisticas.mediaGeometrica.toFixed(precision);
-}

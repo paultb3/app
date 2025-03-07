@@ -38,58 +38,54 @@ export function calcularMediana(numeros,precision) {
      }
 }
 
+
+
 export function calcularModa(numeros) {
     if (numeros.length === 0) throw new Error("El array no puede estar vacío.");
-    const frecuencia = {};
-    let maxFrecuencia = 0;
-    let modas = [];
 
-    numeros.forEach(num => {
-        frecuencia[num] = (frecuencia[num] || 0) + 1;
-        if (frecuencia[num] > maxFrecuencia) {
-            maxFrecuencia = frecuencia[num];
-            modas = [num];
-        } else if (frecuencia[num] === maxFrecuencia && !modas.includes(num)) {
-            modas.push(num);
-        }
-    });
-
-    return modas.length === numeros.length ? [] : modas; // Si todos los valores tienen la misma frecuencia, no hay moda
-}
-
-export function calcularMediaArmonica(numeros) {
-    if (numeros.length === 0 ) {
-        throw new Error("La media armónica no se puede calcular con valores negativos o ceros.");
-    }
-    const sumaInversa = numeros.reduce((acc, num) => acc + (1 / num), 0);
-    return numeros.length / sumaInversa;
-}
-
-export function calcularMediaGeometrica(numeros) {
-    if (numeros.length === 0) {
-        throw new Error("La media geométrica no se puede calcular con valores negativos o ceros.");
-    }
+    let maxFrecuencia = Math.max(...numeros.map(n => n.frequency));
+    let modalClass = numeros.find(n => n.frequency === maxFrecuencia);
     
-    // Sumar logaritmos en lugar de multiplicar directamente
-    const sumaLogaritmos = numeros.reduce((acc, num) => acc + Math.log(num), 0);
+    if (!modalClass) return null;
+
+    let Li = parseFloat(modalClass.Li);
+    let d1 = maxFrecuencia - (modalClass.m > 1 ? numeros[modalClass.m - 2].frequency : 0);
+    let d2 = maxFrecuencia - (modalClass.m < numeros.length ? numeros[modalClass.m].frequency : 0);
+    let amplitud = parseFloat(modalClass.Ls) - Li;
     
-    // Aplicar la fórmula con exponencial
-    return Math.exp(sumaLogaritmos / numeros.length);
+    return parseFloat((Li + (d1 / (d1 + d2)) * amplitud).toFixed(2));
 }
 
-export function calcularVarianza(numeros) {
+export function calcularMediaArmonica(numeros, precision) {
+    if (numeros.length === 0) throw new Error("El array no puede estar vacío.");
+    let sumaInversa = numeros.reduce((acc, num) => acc + (num.frequency / parseFloat(num.xi)), 0);
+    let totalFrecuencia = numeros.reduce((acc, num) => acc + num.frequency, 0);
+    return parseFloat((totalFrecuencia / sumaInversa).toFixed(precision));
+}
+
+export function calcularMediaGeometrica(numeros, precision) {
+    if (numeros.length === 0) throw new Error("El array no puede estar vacío.");
+    let productoLogaritmos = numeros.reduce((acc, num) => acc + (num.frequency * Math.log(parseFloat(num.xi))), 0);
+    let totalFrecuencia = numeros.reduce((acc, num) => acc + num.frequency, 0);
+    return parseFloat(Math.exp(productoLogaritmos / totalFrecuencia).toFixed(precision));
+}
+
+export function calcularVarianza(numeros, precision) {
     if (numeros.length < 2) throw new Error("Se necesita al menos dos valores para calcular la varianza.");
-    const media = calcularMedia(numeros);
-    const sumaCuadrados = numeros.reduce((acc, num) => acc + Math.pow(num - media, 2), 0);
-    return sumaCuadrados / (numeros.length - 1); // Usar n-1 para varianza muestral
+    
+    const media = calcularMedia(numeros, precision);
+    const sumaCuadrados = numeros.reduce((acc, num) => acc + Math.pow(parseFloat(num.xi) - media, 2) * num.frequency, 0);
+    const totalFrecuencia = numeros.reduce((acc, num) => acc + num.frequency, 0);
+    
+    return parseFloat((sumaCuadrados / (totalFrecuencia - 1)).toFixed(precision));
 }
 
-export function calcularDesviacionEstandar(numeros) {
-    return Math.sqrt(calcularVarianza(numeros));
+export function calcularDesviacionEstandar(numeros, precision) {
+    return parseFloat(Math.sqrt(calcularVarianza(numeros, precision)).toFixed(precision));
 }
 
-export function calcularCoeficienteVariacion(numeros) {
-    const media = calcularMedia(numeros);
+export function calcularCoeficienteVariacion(numeros, precision) {
+    const media = calcularMedia(numeros, precision);
     if (media === 0) throw new Error("La media no puede ser cero para calcular el coeficiente de variación.");
-    return (calcularDesviacionEstandar(numeros) / media) * 100;
+    return parseFloat(((calcularDesviacionEstandar(numeros, precision) / media) * 100).toFixed(precision));
 }

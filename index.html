@@ -27,7 +27,7 @@
         </div>
     </header>
 
-    <div class="container">
+    <div class="container" >
         <div class="container-pros">
             <h2>Procesar Datos</h2>
         </div>
@@ -70,10 +70,15 @@
         </div>
 
         <!-- Botón para procesar -->
-       <div class="procesar">
+       <div id="div-de-botones">
         <button  id="process-data-btn">Procesar Datos</button>
 
        </div>
+
+       <div id="loading-overlay">
+        <div class="spinner"></div>
+        <p>Procesando...</p>
+    </div>
        <hr>
         <!-- Resultados: Tabla y Gráfico -->
         <div id="results"></div>
