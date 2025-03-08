@@ -158,7 +158,7 @@ label {
     font-weight: bold;
     color: #555;
     margin-bottom: 5px;
-    font-size: 18px;
+    font-size: 14px;
 }
 
 .presicion{
@@ -198,12 +198,6 @@ button {
 }
 
 #div-de-botones{
-    max-width: 300px;
-    padding: 20px;
-    margin: 10px auto;
-}
-
-#div-botones-click{
     width: 85%;
     margin: 0px auto;
     display: flex;
@@ -212,7 +206,7 @@ button {
     padding: 10px;
 }
 
-#div-botones-click button {
+#div-de-botones button {
     font-size: 12px;
     padding: 5px;
     margin: 10px 50px;
@@ -221,18 +215,11 @@ button {
 
 /* Botón de Descargar Excel */
 .btn-descargar-excel,.btn-descargar-grafico {
-    background-color: #4CAF50;
+    background-color: #2196F3;
     color: white;
 }
 
 .btn-descargar-excel:hover, .btn-descargar-grafico:hover  {
-    background-color: #45A049;
-}
-
-.btn-cargar-denuevo{
-    background-color: #2196F3;
-}
-.btn-cargar-denuevo:hover{
     background-color:#1976D2;
 }
 
@@ -241,24 +228,24 @@ button:hover {
 }
 
 /*Estilos de la tabla de frecuencias*/
-#results {
+#results, #graficos {
     margin-top: 30px;
     overflow-x: auto;
 }
 
-#results table {
+#results table, #graficos table {
     width: 100%;
     border-collapse: collapse;
     font-size: 14px;
 }
 
-#results th, #results td {
+#results th, #results td, #graficos th, #graficos td  {
     border: 1px solid #ddd;
     padding: 12px;
     text-align: center;
 }
 
-#results th {
+#results th, #graficos th {
     background-color: #4CAF50;
     color: white;
 }
@@ -345,10 +332,9 @@ button:hover {
 
     
     
-#div-botones-click{
+#div-de-botones{
     width: 80%;
     margin: 0px auto;
-    background-color: red;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;

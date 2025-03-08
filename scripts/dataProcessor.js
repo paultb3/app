@@ -9,25 +9,38 @@ import {
     calcularCoeficienteVariacion
 } from './statsCalculator.js';
 
+import {
+    calcularMediaDiscreta,
+    calcularMedianaDiscreta,
+    calcularModaDiscreta,
+    calcularMediaArmonicaDiscreta,
+   calcularMediaGeometricaDiscreta,
+    calcularVarianzaDiscreta,
+    calcularDesviacionEstandarDiscreta,
+    calcularCoeficienteVariacionDiscreta
+ } from './stasCalulculatorCualitivaDiscreta.js';
+
 export function processData(dataArray, variableType) {
 
 
-    if (variableType === 'cuantitativa_continua') {
+    if (variableType === 'cuantitativa_continua' || variableType==='cuantitatita_discreta_intervalos') {
         const processedData = processContinuousData(dataArray);
         return {
             ...processedData,
-            estadisticas: calcularEstadisticas(processedData.result)
+            estadisticas: calcularEstadisticas(processedData.result ,variableType)
         };
     } else {
         const processedData = processDiscreteOrQualitativeData(dataArray, variableType);
         if (variableType === 'cuantitativa_discreta') {
             return {
                 ...processedData,
+                estadisticas:calcularEstadisticas(dataArray,variableType)
             };
         }
         return processedData;
     }
 }
+
 
 // Procesar variables cualitativas y cuantitativas discretas
 function processDiscreteOrQualitativeData(dataArray, variableType) {
@@ -147,16 +160,28 @@ function processContinuousData(dataArray) {
     return { result, totalFrequency: n };
 }
 
-function calcularEstadisticas(numeros) {
-    return {
-        media: calcularMedia(numeros, escogerPrecision()),
-        mediana: calcularMediana(numeros, escogerPrecision()),
-        moda: calcularModa(numeros),
-        mediaArmonica: calcularMediaArmonica(numeros, escogerPrecision()),
-        mediaGeometrica: calcularMediaGeometrica(numeros, escogerPrecision()),
-        varianza: calcularVarianza(numeros, escogerPrecision()),
-        desviacionEstandar: calcularDesviacionEstandar(numeros, escogerPrecision()),
-        coeficienteVariacion: calcularCoeficienteVariacion(numeros, escogerPrecision())
-    };
+function calcularEstadisticas(numeros, variableType) {
+    if(variableType ==='cuantitativa_continua' || variableType==='cuantitatita_discreta_intervalos'){
+        return {
+            media: calcularMedia(numeros, escogerPrecision()),
+            mediana: calcularMediana(numeros, escogerPrecision()),
+            moda: calcularModa(numeros),
+            mediaArmonica: calcularMediaArmonica(numeros, escogerPrecision()),
+            mediaGeometrica: calcularMediaGeometrica(numeros, escogerPrecision()),
+            varianza: calcularVarianza(numeros, escogerPrecision()),
+            desviacionEstandar: calcularDesviacionEstandar(numeros, escogerPrecision()),
+            coeficienteVariacion: calcularCoeficienteVariacion(numeros, escogerPrecision())
+        };
+    }else{
+        return{
+            media :calcularMediaDiscreta(numeros, escogerPrecision()),
+            mediana:calcularMedianaDiscreta(numeros, escogerPrecision()),
+            moda: calcularModaDiscreta(numeros),
+            mediaArmonica: calcularMediaArmonicaDiscreta(numeros, escogerPrecision()),
+            mediaGeometrica : calcularMediaGeometricaDiscreta(numeros, escogerPrecision()),
+            varianza :calcularVarianzaDiscreta(numeros, escogerPrecision()),
+            desviacionEstandar: calcularDesviacionEstandarDiscreta(numeros, escogerPrecision()),
+            coeficienteVariacion :calcularCoeficienteVariacionDiscreta(numeros, escogerPrecision())
+        }
+    }
 }
-

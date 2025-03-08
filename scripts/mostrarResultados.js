@@ -1,3 +1,5 @@
+import { configurarDescargaEstadisticas } from './descargarMedidas.js';
+
 export function medidasDeTendeciCentral(estadisticas){
     const statsDiv = document.createElement('div');
         statsDiv.id = "stats-results";
@@ -15,6 +17,8 @@ export function medidasDeTendeciCentral(estadisticas){
             </table>
             <button id="descargarExcel">Descargar Excel</button>
         `;
+         // Configurar la funcionalidad del botón de descarga
+     configurarDescargaEstadisticas(estadisticas);
     
         return statsDiv;
 }

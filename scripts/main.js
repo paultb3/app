@@ -24,12 +24,13 @@ document.getElementById('process-data-btn').addEventListener('click', async () =
     try {
 
         loadingOverlay.style.display = "flex";
-        
-        mostrarBotonDeProcesar();
+
         // Leer y procesar el archivo Excel
         const excelData = await readExcelFile(file);
         const columnData = getColumnDataByName(excelData, columnName);
 
+        
+        mostrarBotonDeProcesar();
         const processedData = processData(columnData, variableType);
         const { result, totalFrequency, estadisticas } = processedData;
 
@@ -42,9 +43,6 @@ document.getElementById('process-data-btn').addEventListener('click', async () =
 
         await new Promise(resolve => setTimeout(resolve, Math.max(elapsedTime, 500)));
 
-
-    
-    
     } catch (error) {
         alert(error.message);
     } finally{
@@ -54,6 +52,7 @@ document.getElementById('process-data-btn').addEventListener('click', async () =
 
 // Función para mostrar la tabla en la página
 function displayResults(data, totalFrequency, variableType, estadisticas) {
+    const nombreDeColumna = document.querySelector('#column-name-input').value;
     const resultsDiv = document.getElementById('results');
     resultsDiv.innerHTML = '';  // Limpiar resultados previos
 
@@ -66,11 +65,11 @@ function displayResults(data, totalFrequency, variableType, estadisticas) {
     const headerRow = document.createElement('tr');
 
     // Encabezados según el tipo de variable
-    const headers = (variableType === 'cuantitativa_continua') 
-        ? ['Clase (mi)', 'Li', 'Ls', 'Marca de Clase (xi)', 'Frecuencia absoluta simple (fi)', 'Frecuencia Absoluta Acumulada (Fi)', 
+    const headers = (variableType === 'cuantitativa_continua' || variableType==='cuantitatita_discreta_intervalos') 
+        ? [nombreDeColumna, 'Li', 'Ls', 'Marca de Clase (xi)', 'Frecuencia absoluta simple (fi)', 'Frecuencia Absoluta Acumulada (Fi)', 
            'Frecuencia Relativa (hi)', 'Frecuencia Relativa Acumulada (Hi)', 'Frecuencia Relativa Porcentual (hi%)', 'Frecuencia Relativa Acumulada Porcentual (Hi%)']
-        : ['Valor', 'Frecuencia (f)', 'Frecuencia Acumulada (F)', 'Frecuencia Relativa (fr)', 
-        'Frecuencia Relativa Acumulada (Fr)', 'Frecuencia Relativa Porcentual (%)', 'Frecuencia Relativa Porcentual Acumulada (%)'];
+        : [nombreDeColumna, 'Frecuencia Absoluta (fi)', 'Frecuencia Absoluta Acumulada (Fi)', 'Frecuencia Relativa (hi)', 
+        'Frecuencia Relativa Acumulada (Hi)', 'Frecuencia Relativa Porcentual (hi%)', 'Frecuencia Relativa Porcentual Acumulada (Hi%)'];
 
     headers.forEach(header => {
         const th = document.createElement('th');
@@ -114,7 +113,7 @@ function displayResults(data, totalFrequency, variableType, estadisticas) {
     // Insertar los datos en la tabla
     data.forEach(row => {
         const tr = document.createElement('tr');
-        if (variableType === 'cuantitativa_continua') {
+        if (variableType === 'cuantitativa_continua' || variableType==='cuantitatita_discreta_intervalos') {
             tr.innerHTML = `
                 <td>${row.m}</td>
                 <td>${row.Li}</td>

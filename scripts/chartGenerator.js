@@ -1,10 +1,12 @@
 export function generateChart(data, variableType) {
     const ctx = document.getElementById('frequency-chart').getContext('2d');
+    const nombreDeColumna = document.querySelector('#column-name-input').value;
+
     document.getElementById('frequency-chart').style.display = 'block';
 
     let labels, chartType, backgroundColors;
 
-    if (variableType === 'cualitativa') {
+    if (variableType === 'cualitativa' || variableType === 'cuantitativa_discreta') {
         // Gráfico de pastel para variables cualitativas
         labels = data.map(item => item.value);
         chartType = 'pie';
@@ -12,9 +14,9 @@ export function generateChart(data, variableType) {
     } else if (variableType === 'cuantitativa_discreta') {
         // Gráfico de barras para cuantitativas discretas
         labels = data.map(item => item.value);
-        chartType = 'bar';
-        backgroundColors = 'rgba(75, 192, 192, 0.6)';
-    } else if (variableType === 'cuantitativa_continua') {
+        chartType = 'pie';
+        backgroundColors = labels.map(() => getRandomColor());
+    } else if (variableType === 'cuantitativa_continua' || variableType==='cuantitatita_discreta_intervalos') {
         // Histograma (gráfico de barras) para cuantitativas continuas
         labels = data.map(item => `${item.Li} - ${item.Ls}`);
         chartType = 'bar';
@@ -32,7 +34,7 @@ export function generateChart(data, variableType) {
         data: {
             labels: labels,
             datasets: [{
-                label: 'Frecuencia Absoluta',
+                label: `Histograma de ${nombreDeColumna}`, // Asigna un nombre en caso de "undefined"
                 data: frequencies,
                 backgroundColor: backgroundColors,
                 borderColor: 'rgba(0, 0, 0, 0.1)',
@@ -41,11 +43,20 @@ export function generateChart(data, variableType) {
         },
         options: {
             responsive: true,
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.raw;
+                        }
+                    }
+                }
+            },
             scales: chartType === 'bar' ? {
                 x: {
                     title: {
                         display: true,
-                        text: variableType === 'cuantitativa_continua' ? 'Intervalos' : 'Valores'
+                        text: (variableType === 'cuantitativa_continua' || variableType==='cuantitatita_discreta_intervalos') ?  nombreDeColumna : nombreDeColumna
                     }
                 },
                 y: {
