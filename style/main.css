@@ -214,12 +214,12 @@ button {
 }
 
 /* Botón de Descargar Excel */
-.btn-descargar-excel,.btn-descargar-grafico {
+.btn-descargar-excel,.btn-descargar-grafico,.btn-descargar-tabla {
     background-color: #2196F3;
     color: white;
 }
 
-.btn-descargar-excel:hover, .btn-descargar-grafico:hover  {
+.btn-descargar-excel:hover, .btn-descargar-grafico:hover , .btn-descargar-tabla:hover {
     background-color:#1976D2;
 }
 
@@ -328,7 +328,7 @@ button:hover {
     overflow: hidden;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 800px) {
 
     
     

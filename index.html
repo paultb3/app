@@ -6,7 +6,9 @@
     <title>Procesador de Datos</title>
     <link rel="stylesheet" href="style/main.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
 </head>
 <body>
@@ -59,17 +61,6 @@
         
         </div>
 
-
-        <div class="form-group">
-            <label for="table-filename">Guardar tabla como:</label>
-            <input type="text" id="table-filename" placeholder="Ej: tabla_frecuencia">
-        </div>
-
-        <div class="form-group">
-            <label for="image-filename">Guardar imagen como:</label>
-            <input type="text" id="image-filename" placeholder="Ej: grafico_frecuencia">
-        </div>
-
         <!-- Botón para procesar -->
        <div id="div-de-botones">
         <button  id="process-data-btn">Procesar Datos</button>
@@ -82,20 +73,19 @@
     </div>
        <hr>
         <!-- Resultados: Tabla y Gráfico -->
-        <div id="results"></div>
         <div id="stats-results"></div> <!-- Aquí se mostrarán las estadísticas -->
+        <div id="results"></div>
         
-        <button id="descargarExcel" style="display: none;">Descargar Excel</button>
         <canvas id="frequency-chart" style="display: none; margin-top: 20px;"></canvas>
     </div>
 
     <!-- Librerías externas -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <!-- Script principal -->
+    <script type="module" src="./scripts/donwloadHandler.js"> </script>
     <script type="module" src="scripts/main.js"></script>
 </body>
 </html>
