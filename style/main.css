@@ -190,7 +190,6 @@ button {
     padding: 10px;
     background-color: #4CAF50;
     color: white;
-    font-size: 18px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -198,21 +197,26 @@ button {
 }
 
 #div-de-botones{
-    width: 85%;
+    width: 50%;
     margin: 0px auto;
     display: flex;
     justify-content: space-between;
-    gap: 2px;
+    gap: 1px;
     padding: 10px;
 }
 
 #div-de-botones button {
-    font-size: 12px;
     padding: 5px;
-    margin: 10px 50px;
+    margin: 2px 3px;
     border: none;
 }
 
+ #process-data-btn{
+    width: 300px;
+    margin: auto;
+   font-size: 18px;
+   padding: 0px;
+}
 /* Botón de Descargar Excel */
 .btn-descargar-excel,.btn-descargar-grafico,.btn-descargar-tabla {
     background-color: #2196F3;
@@ -258,22 +262,24 @@ button:hover {
     background-color: #C8F1CC;
 }
 
+
+/*tamaño del grafico*/
 #frequency-chart {
     margin-top: 30px;
-    width: 100%;
+    width: 30%;
     height: 400px;
 }
 
 
 /* Estilos para la tabla de estadísticas */
 
-#stats-results {
-    margin: 10px auto;
+#stats-results, #cuartiles-result{
+    margin: 20px auto;
     border-radius: 20px;
     margin-bottom: 40px;
     width: 60%;
 }
-#stats-results h3 {
+#stats-results h3, #cuartiles-result h3 {
     border-top-left-radius: 10px;  /* Esquina superior izquierda */
     border-top-right-radius: 10px; /* Esquina superior derecha */
     background-color: #4CAF50 ;
@@ -287,7 +293,7 @@ button:hover {
     letter-spacing: 1px;
 }
 
-#stats-results table {
+#stats-results table , #cuartiles-result table{
     border-radius: 12px;
     margin: 0px auto;
     width: 100%;
@@ -296,37 +302,38 @@ button:hover {
     background: white;
 }
 
-#stats-results th, #stats-results td {
+#stats-results th, #stats-results td, #cuartiles-result th, #cuartiles-result td {
     border: 1px solid #ddd;
     padding: 10px;
     margin-left: 20px;
     text-align: left;
 }
 
-#stats-results th {
+#stats-results th, #cuartiles-result th {
     background-color: #4CAF50;
     color: white;
     font-weight: bold;
 }
 
-#stats-results tr:nth-child(even) {
+#stats-results tr:nth-child(even), #cuartiles-result tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
-#stats-results tr:hover {
+#stats-results tr:hover, #cuartiles-result tr:hover {
     background-color: #C8F1CC;
 }
 
-#stats-results td:first-child {
+#stats-results td:first-child, #cuartiles-result td:first-child {
     font-weight: bold;
     color: #333;
 }
 
 /* Efecto de sombra y bordes suaves */
-#stats-results table {
+#stats-results table, #cuartiles-result table {
     border-radius: 0px;
     overflow: hidden;
 }
+
 
 @media (max-width: 800px) {
 

@@ -1,0 +1,47 @@
+export function asimetriaFisherPearson(dataArray) {
+    const n = dataArray.length;
+    const mean = dataArray.reduce((sum, val) => sum + val, 0) / n;
+
+    const std = Math.sqrt(dataArray.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) / n);
+
+    const skewness = dataArray.reduce((sum, val) => sum + Math.pow((val - mean) / std, 3), 0) / n;
+
+    return skewness;
+}
+
+export function asimetriaBowley(dataArray) {
+    const sorted = [...dataArray].sort((a, b) => a - b);
+    const n = sorted.length;
+
+    const Q1 = getPercentile(sorted, 25);
+    const Q2 = getPercentile(sorted, 50);
+    const Q3 = getPercentile(sorted, 75);
+
+    const bowley = (Q3 + Q1 - 2 * Q2) / (Q3 - Q1);
+    return bowley;
+}
+
+// Función auxiliar para percentiles (cuartiles incluidos)
+function getPercentile(sortedArray, percentile) {
+    const pos = percentile * (sortedArray.length + 1) / 100;
+
+    if (Number.isInteger(pos)) {
+        return sortedArray[pos - 1];
+    } else {
+        const lower = Math.floor(pos) - 1;
+        const upper = Math.ceil(pos) - 1;
+        return sortedArray[lower] + (pos - Math.floor(pos)) * (sortedArray[upper] - sortedArray[lower]);
+    }
+}
+
+
+export function asimetriaKelly(dataArray) {
+    const sorted = [...dataArray].sort((a, b) => a - b);
+
+    const P10 = getPercentile(sorted, 10);
+    const P50 = getPercentile(sorted, 50);
+    const P90 = getPercentile(sorted, 90);
+
+    const kelly = (P90 + P10 - 2 * P50) / (P90 - P10);
+    return kelly;
+}

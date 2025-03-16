@@ -1,3 +1,7 @@
+// ✅ Primero registrás el plugin, SOLO UNA VEZ
+Chart.register(ChartDataLabels);
+
+// Después definís tu función
 export function generateChart(data, variableType) {
     const ctx = document.getElementById('frequency-chart').getContext('2d');
     const nombreDeColumna = document.querySelector('#column-name-input').value;
@@ -7,17 +11,10 @@ export function generateChart(data, variableType) {
     let labels, chartType, backgroundColors;
 
     if (variableType === 'cualitativa' || variableType === 'cuantitativa_discreta') {
-        // Gráfico de pastel para variables cualitativas
-        labels = data.map(item => item.value);
-        chartType = 'pie';
-        backgroundColors = labels.map(() => getRandomColor());
-    } else if (variableType === 'cuantitativa_discreta') {
-        // Gráfico de barras para cuantitativas discretas
         labels = data.map(item => item.value);
         chartType = 'pie';
         backgroundColors = labels.map(() => getRandomColor());
     } else if (variableType === 'cuantitativa_continua' || variableType==='cuantitatita_discreta_intervalos') {
-        // Histograma (gráfico de barras) para cuantitativas continuas
         labels = data.map(item => `${item.Li} - ${item.Ls}`);
         chartType = 'bar';
         backgroundColors = 'rgba(153, 102, 255, 0.6)';
@@ -26,7 +23,7 @@ export function generateChart(data, variableType) {
     const frequencies = data.map(item => item.frequency);
 
     if (window.frequencyChart) {
-        window.frequencyChart.destroy(); // Destruir el gráfico anterior si existe
+        window.frequencyChart.destroy();
     }
 
     window.frequencyChart = new Chart(ctx, {
@@ -34,7 +31,7 @@ export function generateChart(data, variableType) {
         data: {
             labels: labels,
             datasets: [{
-                label: `Histograma de ${nombreDeColumna}`, // Asigna un nombre en caso de "undefined"
+                label: `Histograma de ${nombreDeColumna}`,
                 data: frequencies,
                 backgroundColor: backgroundColors,
                 borderColor: 'rgba(0, 0, 0, 0.1)',
@@ -44,19 +41,44 @@ export function generateChart(data, variableType) {
         options: {
             responsive: true,
             plugins: {
+                title: {
+                    display: true,
+                    text: `Distribución de ${nombreDeColumna}`,
+                    font: {
+                        size: 18
+                    }
+                },
                 tooltip: {
                     callbacks: {
                         label: function(context) {
-                            return context.raw;
+                            const data = context.chart.data.datasets[0].data;
+                            const total = data.reduce((acc, curr) => acc + curr, 0);
+                            const value = context.raw;
+                            return `${value} `;
                         }
                     }
-                }
+                },
+                datalabels: chartType === 'pie' ? {
+                    formatter: function(value, context) {
+                        const data = context.chart.data.datasets[0].data;
+                        const total = data.reduce((acc, curr) => acc + curr, 0);
+                        const percentage = (value / total * 100).toFixed(1) + '%';
+                        return percentage;
+                    },
+                    color: '#fff',
+                    font: {
+                        weight: 'bold',
+                        size: 14
+                    },
+                    anchor: 'center',
+                    align: 'center'
+                } : false
             },
             scales: chartType === 'bar' ? {
                 x: {
                     title: {
                         display: true,
-                        text: (variableType === 'cuantitativa_continua' || variableType==='cuantitatita_discreta_intervalos') ?  nombreDeColumna : nombreDeColumna
+                        text: nombreDeColumna
                     }
                 },
                 y: {
@@ -73,6 +95,7 @@ export function generateChart(data, variableType) {
         }
     });
 }
+
 
 // Generar colores aleatorios para el gráfico de pastel
 function getRandomColor() {

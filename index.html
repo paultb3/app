@@ -10,6 +10,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
+
+
+
 </head>
 <body>
     <header>
@@ -64,6 +67,7 @@
         <!-- Botón para procesar -->
        <div id="div-de-botones">
         <button  id="process-data-btn">Procesar Datos</button>
+        <div id="botones-descarga"></div>
 
        </div>
 
@@ -74,15 +78,19 @@
        <hr>
         <!-- Resultados: Tabla y Gráfico -->
         <div id="stats-results"></div> <!-- Aquí se mostrarán las estadísticas -->
+        <div id="cuartiles-result"></div>
         <div id="results"></div>
         
-        <canvas id="frequency-chart" style="display: none; margin-top: 20px;"></canvas>
+        <canvas id="frequency-chart" style="display: none; margin-top: 20px; width: 60%;"></canvas>
     </div>
 
     <!-- Librerías externas -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Luego chartjs-plugin-datalabels -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
 
     <!-- Script principal -->
     <script type="module" src="./scripts/donwloadHandler.js"> </script>
