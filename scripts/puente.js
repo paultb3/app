@@ -14,7 +14,7 @@ import {
     calcularMedianaDiscreta,
     calcularModaDiscreta,
     calcularMediaArmonicaDiscreta,
-   calcularMediaGeometricaDiscreta,
+    calcularMediaGeometricaDiscreta,
     calcularVarianzaDiscreta,
     calcularDesviacionEstandarDiscreta,
     calcularCoeficienteVariacionDiscreta
@@ -22,7 +22,13 @@ import {
 
  import {escogerPrecision} from './dataProcessor.js';
 
-import {calcularCuartilesDatosNoAgrupados} from '../medidasDePosisionDatosNoAgrupados.js'
+import {calcularCuartilesDatosNoAgrupados} from './medidasDePosisionDatosNoAgrupados.js'
+
+import {
+    asimetriaBowley,
+    asimetriaFisherPearson,
+    asimetriaKelly
+} from './calcularCoeficienteDeAsimetria.js'
 
 export function calcularEstadisticas(numeros, variableType) {
     if(variableType ==='cuantitativa_continua' || variableType==='cuantitatita_discreta_intervalos'){
@@ -51,7 +57,19 @@ export function calcularEstadisticas(numeros, variableType) {
 }
 
 export function calcularMedidasDePosicion(numeros, variableType){
-    if(!(variableType==='cuantitaiva')){
-        cuartiles : calcularCuartilesDatosNoAgrupados(numeros)
+    if(variableType==='cuantitativa_discreta'){
+        return calcularCuartilesDatosNoAgrupados(numeros)
+    }else if(variableType==='cuantitativa_continua'||variableType==='cuantitatita_discreta_intervalos'){
+
+    }
+}
+
+export function calcularCoeficienteDeAsimetria(numeros,variableType){
+    if(variableType==='cuantitativa_discreta'){
+        return {
+            fisher: asimetriaFisherPearson(numeros, escogerPrecision()),
+            bowley : asimetriaBowley(numeros, escogerPrecision()),
+            Kelly: asimetriaKelly(numeros, escogerPrecision()),
+        }
     }
 }
