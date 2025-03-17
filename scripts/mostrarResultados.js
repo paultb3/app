@@ -30,11 +30,13 @@ export function mostrarCuartiles(cuartiles) {
 export function mostrarAsimetria(asimetria) {
     const cuartilesDiv = document.getElementById('asimetria-result');
     cuartilesDiv.innerHTML = `
-        <h3>Medidas de Asimetría</h3>
+        <h3>Coeficientes de Asimetría</h3>
         <table>
-            <tr><td>Asimetria de Fisher</td><td>${asimetria.fisher}</td></tr>
-            <tr><td>Asimetria de Bowley</td><td>${asimetria.bowley}</td></tr>
-            <tr><td>Asimetria de Kelly</td><td>${asimetria.Kelly}</td></tr>
+            <tr><td>Fisher</td><td>${asimetria.fisher}</td></tr>
+            <tr><td>Bowley</td><td>${asimetria.bowley}</td></tr>
+            <tr><td>Kelly</td><td>${asimetria.kelly}</td></tr>
+            <tr><td>Pearson</td><td>${asimetria.person}</td></tr>
+            <tr><td>Kurtosis</td><td>${asimetria.kurtosis}</td></tr>
         </table>
     `;
 }
