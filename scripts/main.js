@@ -40,9 +40,9 @@ document.getElementById('process-data-btn').addEventListener('click', async () =
         const columnData = getColumnDataByName(excelData, columnName);
 
         const processedData = processData(columnData, variableType);
-        const { result, totalFrequency,totalRelativeFrequency,totalPorcentaje, estadisticas, cuartiles, asimetria} = processedData;
-        
-        // Mostrar la tabla de frecuencias y estadísticas en la página
+        const { result, totalFrequency,totalRelativeFrequency,totalPorcentaje, estadisticas, cuartiles, asimetria } = processedData;
+        console.log(result);
+        // Mostrar la   tabla de frecuencias y estadísticas en la página
         displayResults(result, totalFrequency,totalRelativeFrequency,totalPorcentaje, variableType, estadisticas, cuartiles, asimetria);
         mostrarBotonDeProcesar(variableType);
         generateChart(result, variableType);

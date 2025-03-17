@@ -44,3 +44,29 @@ export function asimetriaKelly(dataArray, precision) {
     const kelly = (P90 + P10 - 2 * P50) / (P90 - P10);
     return Number(kelly).toFixed(precision);
 }
+
+export function asimetriaPearson(dataArray, precision) {
+    const n = dataArray.length;
+    const sorted = [...dataArray].sort((a, b) => a - b);
+
+    const mean = dataArray.reduce((sum, val) => sum + val, 0) / n;
+    const median = getPercentile(sorted, 50);
+
+    const std = Math.sqrt(dataArray.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) / n);
+
+    const pearson = (3 * (mean - median)) / std;
+    return parseFloat(pearson).toFixed(precision);
+}
+
+export function kurtosisFisher(dataArray, precision) {
+    const n = dataArray.length;
+    const mean = dataArray.reduce((sum, val) => sum + val, 0) / n;
+
+    const std = Math.sqrt(dataArray.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) / n);
+
+    const kurtosis = dataArray.reduce((sum, val) => sum + Math.pow((val - mean) / std, 4), 0) / n;
+
+    // Curtosis excesiva: se le resta 3
+    const kurtosisExcess = kurtosis - 3;
+    return parseFloat(kurtosisExcess).toFixed(precision);
+}

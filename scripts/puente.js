@@ -22,13 +22,27 @@ import {
 
  import {escogerPrecision} from './dataProcessor.js';
 
-import {calcularCuartilesDatosNoAgrupados} from './medidasDePosisionDatosNoAgrupados.js'
+import {
+    calcularCuartilesDatosNoAgrupados,
+    calcularCuartilesDatosAgrupados,
+} from './medidasDePosisionDatosNoAgrupados.js'
 
 import {
     asimetriaBowley,
     asimetriaFisherPearson,
-    asimetriaKelly
+    asimetriaKelly,
+    asimetriaPearson,
+    kurtosisFisher,
+    
 } from './calcularCoeficienteDeAsimetria.js'
+
+import {asimetriaBowleyAgrupada,
+        asimetriaFisherPearsonAgrupada,
+        asimetriaPearsonAgrupada,
+        asimetriaKellyAgrupada,
+        kurtosisFisherAgrupada
+}
+from './calcularAsimetriaAgrupados.js'
 
 export function calcularEstadisticas(numeros, variableType) {
     if(variableType ==='cuantitativa_continua' || variableType==='cuantitatita_discreta_intervalos'){
@@ -60,7 +74,7 @@ export function calcularMedidasDePosicion(numeros, variableType){
     if(variableType==='cuantitativa_discreta'){
         return calcularCuartilesDatosNoAgrupados(numeros)
     }else if(variableType==='cuantitativa_continua'||variableType==='cuantitatita_discreta_intervalos'){
-
+        return calcularCuartilesDatosAgrupados(numeros, escogerPrecision())
     }
 }
 
@@ -69,7 +83,17 @@ export function calcularCoeficienteDeAsimetria(numeros,variableType){
         return {
             fisher: asimetriaFisherPearson(numeros, escogerPrecision()),
             bowley : asimetriaBowley(numeros, escogerPrecision()),
-            Kelly: asimetriaKelly(numeros, escogerPrecision()),
+            kelly: asimetriaKelly(numeros, escogerPrecision()),
+            person: asimetriaPearson(numeros, escogerPrecision()),
+            kurtosis: kurtosisFisher(numeros, escogerPrecision()),
+        }
+    }else if(variableType==='cuantitativa_continua'||variableType==='cuantitatita_discreta_intervalos'){
+        return{
+            fisher: asimetriaFisherPearsonAgrupada(numeros,escogerPrecision()),
+            bowley: asimetriaBowleyAgrupada(numeros,escogerPrecision()),
+            kelly: asimetriaKellyAgrupada(numeros, escogerPrecision()),
+            person:asimetriaPearsonAgrupada(numeros,escogerPrecision()),
+            kurtosis: kurtosisFisherAgrupada(numeros,escogerPrecision()),
         }
     }
 }

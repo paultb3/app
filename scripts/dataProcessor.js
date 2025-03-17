@@ -1,4 +1,5 @@
- import {
+ import { asimetriaBowley } from './calcularCoeficienteDeAsimetria.js';
+import {
     calcularEstadisticas,
     calcularMedidasDePosicion,
     calcularCoeficienteDeAsimetria,
@@ -12,9 +13,12 @@
         case 'cuantitativa_continua':
         case 'cuantitatita_discreta_intervalos':
             processedData = processContinuousData(dataArray);
+            console.log(calcularCoeficienteDeAsimetria(processedData.result, variableType));
             return {
                 ...processedData,
                 estadisticas: calcularEstadisticas(processedData.result, variableType),
+                cuartiles : calcularMedidasDePosicion(processedData.result, variableType),
+                asimetria: calcularCoeficienteDeAsimetria(processedData.result, variableType)
             };
 
         case 'cuantitativa_discreta':

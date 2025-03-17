@@ -20,23 +20,29 @@ export function calcularCuartilesDatosNoAgrupados(dataArray) {
     return cuartiles;
 }
   
-export function calcularDecilesDatosNoAgrupados(dataArray) {
-    const sorted = [...dataArray].sort((a, b) => a - b);
-    const total = sorted.length;
-    const deciles = [];
+export function calcularCuartilesDatosAgrupados(arrayClases, precision) {
+    const totalFrecuencia = arrayClases.reduce((acc, obj) => acc + obj.frequency, 0);
+    const cuartiles = [];
 
-    for (let k = 1; k <= 9; k++) {
-        const pos = k * (total + 1) / 10;
+    for (let k = 1; k <= 3; k++) {
+        const posicion = (k * totalFrecuencia) / 4;
+        let frecuenciaAcumulada = 0;
 
-        if (Number.isInteger(pos)) {
-            deciles.push(sorted[pos - 1]);
-        } else {
-            const lowerIndex = Math.floor(pos) - 1;
-            const upperIndex = Math.ceil(pos) - 1;
-            const interpolado = sorted[lowerIndex] + (pos - Math.floor(pos)) * (sorted[upperIndex] - sorted[lowerIndex]);
-            deciles.push(interpolado);
+        for (let i = 0; i < arrayClases.length; i++) {
+            const clase = arrayClases[i];
+            const frecuenciaAnterior = frecuenciaAcumulada;
+            frecuenciaAcumulada += clase.frequency;
+
+            if (frecuenciaAcumulada >= posicion) {
+                const Li = parseFloat(clase.Li);
+                const fi = clase.frequency;
+                const A = parseFloat(clase.Ls) - parseFloat(clase.Li);
+                const Qk = Li + ((posicion - frecuenciaAnterior) / fi) * A;
+                cuartiles.push(Number(Qk.toFixed(precision)));
+                break;
+            }
         }
     }
-    return deciles;
+    return cuartiles;
 }
 
