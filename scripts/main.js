@@ -5,6 +5,19 @@ import { mostrarBotonDeProcesar } from './mostrarBotones.js';
 import {displayResults} from './mostrarResultados.js';
 
 
+// Mostrar u ocultar el input de precisión según tipo de variable
+const variableTypeSelect = document.getElementById('variable-type');
+const precisionDiv = document.getElementById('div-presicion');
+
+variableTypeSelect.addEventListener('change', () => {
+    const selectedType = variableTypeSelect.value;
+    if (selectedType === 'cualitativa') {
+        precisionDiv.style.display = 'none';
+    } else {
+        precisionDiv.style.display = 'block';
+    }
+});
+
 // Evento principal para procesar los datos
 document.getElementById('process-data-btn').addEventListener('click', async () => {
     const loadingOverlay = document.getElementById("loading-overlay");

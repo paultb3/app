@@ -20,7 +20,23 @@ export function calcularCuartilesDatosNoAgrupados(dataArray) {
     return cuartiles;
 }
   
+export function calcularDecilesDatosNoAgrupados(dataArray) {
+    const sorted = [...dataArray].sort((a, b) => a - b);
+    const total = sorted.length;
+    const deciles = [];
 
-export function calcularCuartilesDatosAgrupados(){
+    for (let k = 1; k <= 9; k++) {
+        const pos = k * (total + 1) / 10;
 
+        if (Number.isInteger(pos)) {
+            deciles.push(sorted[pos - 1]);
+        } else {
+            const lowerIndex = Math.floor(pos) - 1;
+            const upperIndex = Math.ceil(pos) - 1;
+            const interpolado = sorted[lowerIndex] + (pos - Math.floor(pos)) * (sorted[upperIndex] - sorted[lowerIndex]);
+            deciles.push(interpolado);
+        }
+    }
+    return deciles;
 }
+

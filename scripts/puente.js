@@ -22,6 +22,10 @@ import {
 
  import {escogerPrecision} from './dataProcessor.js';
 
+ import {calcularCuartilesDatosNoAgrupados}
+
+ from './calcularCuartiles.js'
+
 export function calcularEstadisticas(numeros, variableType) {
     if(variableType ==='cuantitativa_continua' || variableType==='cuantitatita_discreta_intervalos'){
         return {
@@ -48,6 +52,8 @@ export function calcularEstadisticas(numeros, variableType) {
     }
 }
 
-export function calcularMedidasDePosicion(){
-    
+export function calcularMedidasDePosicion(numeros, variableType){
+    if(variableType==='cuantitaiva'){
+        cuartiles : calcularCuartilesDatosNoAgrupados(numeros)
+    }
 }

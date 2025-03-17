@@ -1,6 +1,7 @@
- import {calcularCuartilesDatosNoAgrupados} from './calcularCuartiles.js';
-
- import {calcularEstadisticas} from './puente.js';
+ import {
+    calcularEstadisticas,
+    calcularMedidasDePosicion,
+ } from './puente.js';
 
  export function processData(dataArray, variableType) {
     let processedData;
@@ -19,7 +20,8 @@
             return {
                 ...processedData,
                 estadisticas: calcularEstadisticas(dataArray, variableType),
-                cuartiles: calcularCuartilesDatosNoAgrupados(dataArray),
+                cuartiles: calcularMedidasDePosicion(dataArray),
+                deciles : ca
             };
 
         case 'cualitativa':
