@@ -1,7 +1,9 @@
  import {
     calcularEstadisticas,
     calcularMedidasDePosicion,
+    calcularCoeficienteDeAsimetria,
  } from './puente.js';
+
 
  export function processData(dataArray, variableType) {
     let processedData;
@@ -20,7 +22,8 @@
             return {
                 ...processedData,
                 estadisticas: calcularEstadisticas(dataArray, variableType),
-                cuartiles: calcularMedidasDePosicion(dataArray),
+                cuartiles: calcularMedidasDePosicion(dataArray, variableType),
+                asimetria : calcularCoeficienteDeAsimetria(dataArray, variableType),
             };
 
         case 'cualitativa':

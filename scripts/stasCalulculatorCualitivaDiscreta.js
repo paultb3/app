@@ -146,6 +146,5 @@ export function calcularCoeficienteVariacionDiscreta(numbers, precision = 2) {
 
     // Calcular el coeficiente de variación porcentual
     let coefVariacion = (parseFloat(desviacionEstandar) / media);
-
     return (coefVariacion* 100).toFixed(precision);
 }

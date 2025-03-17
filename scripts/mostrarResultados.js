@@ -15,20 +15,32 @@ export function medidasDeTendeciCentral(estadisticas) {
     `;
 }
 
-export function Mostrarcuartiles(cuartiles) {
+export function mostrarCuartiles(cuartiles) {
     const cuartilesDiv = document.getElementById('cuartiles-result');
     cuartilesDiv.innerHTML = `
         <h3>Cuartiles</h3>
         <table>
-            <tr><td>Q1 (25%):</td><td>${cuartiles[0]}</td></tr>
-            <tr><td>Q2 (50%):</td><td>${cuartiles[1]}</td></tr>
-            <tr><td>Q3 (75%):</td><td>${cuartiles[2]}</td></tr>
+            <tr><td>Q1 (25%)</td><td>${cuartiles[0]}</td></tr>
+            <tr><td>Q2 (50%)</td><td>${cuartiles[1]}</td></tr>
+            <tr><td>Q3 (75%)</td><td>${cuartiles[2]}</td></tr>
+        </table>
+    `;
+}
+
+export function mostrarAsimetria(asimetria) {
+    const cuartilesDiv = document.getElementById('asimetria-result');
+    cuartilesDiv.innerHTML = `
+        <h3>Medidas de Asimetría</h3>
+        <table>
+            <tr><td>Asimetria de Fisher</td><td>${asimetria.fisher}</td></tr>
+            <tr><td>Asimetria de Bowley</td><td>${asimetria.bowley}</td></tr>
+            <tr><td>Asimetria de Kelly</td><td>${asimetria.Kelly}</td></tr>
         </table>
     `;
 }
 
 // Función para mostrar la tabla en la página
-export function displayResults(data, totalFrequency, totalRelativeFrequency, totalPorcentaje, variableType, estadisticas, cuartiles) {
+export function displayResults(data, totalFrequency, totalRelativeFrequency, totalPorcentaje, variableType, estadisticas, cuartiles, asimetria) {
     const nombreDeColumna = document.querySelector('#column-name-input').value;
 
     // Limpiar TODO antes de mostrar lo nuevo
@@ -36,10 +48,12 @@ export function displayResults(data, totalFrequency, totalRelativeFrequency, tot
     const statsDiv = document.getElementById('stats-results');
     const cuartilesDiv = document.getElementById('cuartiles-result');
     const canvas = document.getElementById('frequency-chart');
+    const asimetriaDiv = document.getElementById('asimetria-result');
 
     resultsDiv.innerHTML = '';
     statsDiv.innerHTML = '';
     cuartilesDiv.innerHTML = '';
+    asimetriaDiv.innerHTML = '';
 
     // Limpiar gráfico anterior si existe
     const chartInstance = Chart.getChart(canvas);
@@ -118,10 +132,15 @@ export function displayResults(data, totalFrequency, totalRelativeFrequency, tot
     // Mostrar estadísticas SOLO si no es cualitativa
     if (estadisticas && variableType !== 'cualitativa') {
         medidasDeTendeciCentral(estadisticas);
+
+    }
+
+    if(asimetria){
+        mostrarAsimetria(asimetria);
     }
 
     // Mostrar cuartiles si hay
     if (cuartiles) {
-        Mostrarcuartiles(cuartiles);
+        mostrarCuartiles(cuartiles);
     }
 }
