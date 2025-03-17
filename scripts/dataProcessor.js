@@ -21,7 +21,6 @@
                 ...processedData,
                 estadisticas: calcularEstadisticas(dataArray, variableType),
                 cuartiles: calcularMedidasDePosicion(dataArray),
-                deciles : ca
             };
 
         case 'cualitativa':
