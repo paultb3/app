@@ -49,7 +49,7 @@ export function calcularEstadisticas(numeros, variableType) {
         return {
             media: calcularMedia(numeros, escogerPrecision()),
             mediana: calcularMediana(numeros, escogerPrecision()),
-            moda: calcularModa(numeros),
+            moda: calcularModa(numeros, escogerPrecision()),
             mediaArmonica: calcularMediaArmonica(numeros, escogerPrecision()),
             mediaGeometrica: calcularMediaGeometrica(numeros, escogerPrecision()),
             varianza: calcularVarianza(numeros, escogerPrecision()),

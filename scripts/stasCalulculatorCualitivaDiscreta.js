@@ -64,7 +64,7 @@ export function calcularMediaArmonicaDiscreta(numbers, precision) {
     return suma === 0 ? "Error: División por cero." : (numbers.length / suma).toFixed(precision);
 }
 
-export function calcularMediaGeometricaDiscreta(numbers, precision = 2) {
+export function calcularMediaGeometricaDiscreta(numbers, precision ) {
     if (numbers.length === 0) {
         return "Error: La lista de números no puede estar vacía."
     }
@@ -85,7 +85,7 @@ export function calcularMediaGeometricaDiscreta(numbers, precision = 2) {
 
 
 
-export function calcularVarianzaDiscreta(numbers, precision = 2) {
+export function calcularVarianzaDiscreta(numbers, precision ) {
     if (numbers.length < 2) {
         return "Error: Se necesitan al menos 2 datos para calcular la varianza muestral.";
     }
@@ -105,7 +105,7 @@ export function calcularVarianzaDiscreta(numbers, precision = 2) {
 }
 
 
-export function calcularDesviacionEstandarDiscreta(numbers, precision = 2) {
+export function calcularDesviacionEstandarDiscreta(numbers, precision) {
     if (numbers.length < 2) {
         return "Error: Se necesitan al menos 2 datos para calcular la desviación estándar.";
     }
@@ -124,20 +124,20 @@ export function calcularDesviacionEstandarDiscreta(numbers, precision = 2) {
     return desviacionEstandar.toFixed(precision);
 }
 
-export function calcularCoeficienteVariacionDiscreta(numbers, precision = 2) {
+export function calcularCoeficienteVariacionDiscreta(numbers, precision) {
     if (numbers.length < 2) {
         return "Error: Se necesitan al menos 2 datos para calcular el coeficiente de variación.";
     }
 
     // Calcular la media muestral
-    let media = numbers.reduce((acc, num) => acc + num, 0) / numbers.length;
+    let media = calcularMediaDiscreta(numbers,10);
 
     if (media === 0) {
         return "Error: La media es 0, no se puede calcular el coeficiente de variación.";
     }
 
     // Calcular la desviación estándar
-    let desviacionEstandar = calcularDesviacionEstandarDiscreta(numbers, precision);
+    let desviacionEstandar = calcularDesviacionEstandarDiscreta(numbers, 10);
 
     // Si la desviación estándar no es un número, devolver el error
     if (isNaN(desviacionEstandar)) {
@@ -145,6 +145,6 @@ export function calcularCoeficienteVariacionDiscreta(numbers, precision = 2) {
     }
 
     // Calcular el coeficiente de variación porcentual
-    let coefVariacion = (parseFloat(desviacionEstandar) / media);
-    return (coefVariacion* 100).toFixed(precision);
+    let coefVariacion = (parseFloat(desviacionEstandar) / media)*100;
+    return (coefVariacion).toFixed(precision);
 }

@@ -1,3 +1,5 @@
+import {calcularCuartilesDatosNoAgrupados} from './medidasDePosisionDatosNoAgrupados.js'
+import {calcularDesviacionEstandarDiscreta} from './stasCalulculatorCualitivaDiscreta.js'
 export function asimetriaFisherPearson(dataArray, precision) {
     const n = dataArray.length;
     const mean = dataArray.reduce((sum, val) => sum + val, 0) / n;
@@ -9,14 +11,11 @@ export function asimetriaFisherPearson(dataArray, precision) {
 }
 
 export function asimetriaBowley(dataArray, precision) {
-    const sorted = [...dataArray].sort((a, b) => a - b);
-    const n = sorted.length;
-
-    const Q1 = getPercentile(sorted, 25);
-    const Q2 = getPercentile(sorted, 50);
-    const Q3 = getPercentile(sorted, 75);
-
-    const bowley = (Q3 + Q1 - 2 * Q2) / (Q3 - Q1);
+    let cuartiles = calcularCuartilesDatosNoAgrupados(dataArray);
+    const Q1 = cuartiles[0];
+    const Q2 = cuartiles[1];
+    const Q3 = cuartiles[2];
+    const bowley = (Q3 + Q1 - (2 * Q2)) / (Q3 - Q1);
     return parseFloat(bowley).toFixed(precision);
 }
 
@@ -62,7 +61,7 @@ export function kurtosisFisher(dataArray, precision) {
     const n = dataArray.length;
     const mean = dataArray.reduce((sum, val) => sum + val, 0) / n;
 
-    const std = Math.sqrt(dataArray.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) / n);
+    const std = calcularDesviacionEstandarDiscreta(dataArray,10) ;
 
     const kurtosis = dataArray.reduce((sum, val) => sum + Math.pow((val - mean) / std, 4), 0) / n;
 

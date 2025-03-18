@@ -14,7 +14,7 @@ export function calcularCuartilesDatosNoAgrupados(dataArray) {
             const lowerIndex = Math.floor(pos) - 1;
             const upperIndex = Math.ceil(pos) - 1;
             const interpolado = sorted[lowerIndex] + (pos - Math.floor(pos)) * (sorted[upperIndex] - sorted[lowerIndex]);
-            cuartiles.push(interpolado);
+            cuartiles.push(Number(interpolado.toFixed(0)));
         }
     }
     return cuartiles;
@@ -35,14 +35,27 @@ export function calcularCuartilesDatosAgrupados(arrayClases, precision) {
 
             if (frecuenciaAcumulada >= posicion) {
                 const Li = parseFloat(clase.Li);
+                console.log(Li);
+                const Ls = parseFloat(clase.Ls);
                 const fi = clase.frequency;
-                const A = parseFloat(clase.Ls) - parseFloat(clase.Li);
-                const Qk = Li + ((posicion - frecuenciaAnterior) / fi) * A;
-                cuartiles.push(Number(Qk.toFixed(precision)));
+                const A = Ls - Li;
+
+                const valorSinRedondear = Li + ((posicion - frecuenciaAnterior) / fi) * A;
+
+                // Redondear a la precisión deseada, manteniendo como número
+                const factor = Math.pow(10, precision);
+                const Qk = Math.round(valorSinRedondear * factor) / factor;
+
+                cuartiles.push(Qk);
+
+                console.log(`Q${k} sin redondear: ${valorSinRedondear}`);
+                console.log(`Q${k} redondeado: ${Qk}`);
                 break;
             }
         }
     }
+
     return cuartiles;
 }
+
 

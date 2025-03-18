@@ -40,7 +40,7 @@ export function calcularMediana(numeros,precision) {
 
 
 
-export function calcularModa(numeros) {
+export function calcularModa(numeros, precision) {
     if (numeros.length === 0) throw new Error("El array no puede estar vacío.");
 
     let maxFrecuencia = Math.max(...numeros.map(n => n.frequency));
@@ -52,8 +52,8 @@ export function calcularModa(numeros) {
     let d1 = maxFrecuencia - (modalClass.m > 1 ? numeros[modalClass.m - 2].frequency : 0);
     let d2 = maxFrecuencia - (modalClass.m < numeros.length ? numeros[modalClass.m].frequency : 0);
     let amplitud = parseFloat(modalClass.Ls) - Li;
-    
-    return parseFloat((Li + (d1 / (d1 + d2)) * amplitud).toFixed(2));
+  
+    return parseFloat((Li + (d1 / (d1 + d2)) * amplitud).toFixed(precision));
 }
 
 export function calcularMediaArmonica(numeros, precision) {
@@ -73,19 +73,18 @@ export function calcularMediaGeometrica(numeros, precision) {
 export function calcularVarianza(numeros, precision) {
     if (numeros.length < 2) throw new Error("Se necesita al menos dos valores para calcular la varianza.");
     
-    const media = calcularMedia(numeros, precision);
+    const media = calcularMedia(numeros, 10);
     const sumaCuadrados = numeros.reduce((acc, num) => acc + Math.pow(parseFloat(num.xi) - media, 2) * num.frequency, 0);
     const totalFrecuencia = numeros.reduce((acc, num) => acc + num.frequency, 0);
-    
     return parseFloat((sumaCuadrados / (totalFrecuencia - 1)).toFixed(precision));
 }
 
 export function calcularDesviacionEstandar(numeros, precision) {
-    return parseFloat(Math.sqrt(calcularVarianza(numeros, precision)).toFixed(precision));
+    return parseFloat(Math.sqrt(calcularVarianza(numeros, 10)).toFixed(precision));
 }
 
 export function calcularCoeficienteVariacion(numeros, precision) {
-    const media = calcularMedia(numeros, precision);
+    const media = calcularMedia(numeros, 10);
     if (media === 0) throw new Error("La media no puede ser cero para calcular el coeficiente de variación.");
-    return parseFloat(((calcularDesviacionEstandar(numeros, precision) / media) * 100).toFixed(precision));
+    return parseFloat(((calcularDesviacionEstandar(numeros, 10) / media) * 100).toFixed(precision));
 }
