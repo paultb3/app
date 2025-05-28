@@ -39,7 +39,11 @@ document.getElementById('process-data-btn').addEventListener('click', async () =
         const excelData = await readExcelFile(file);
         const columnData = getColumnDataByName(excelData, columnName);
 
-        const processedData = processData(columnData, variableType);
+        console.log("Tamaño de los datos:", columnData.length);
+console.log("Tipo de variable:", variableType);
+
+const processedData = processData(columnData.slice(0, 100), variableType); // procesa solo 100
+
         const { result, totalFrequency,totalRelativeFrequency,totalPorcentaje, estadisticas, cuartiles, asimetria } = processedData;
         // Mostrar la   tabla de frecuencias y estadísticas en la página
         displayResults(result, totalFrequency,totalRelativeFrequency,totalPorcentaje, variableType, estadisticas, cuartiles, asimetria);

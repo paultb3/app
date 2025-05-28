@@ -1,12 +1,11 @@
- import { asimetriaBowley } from './calcularCoeficienteDeAsimetria.js';
+import { asimetriaBowley } from './calcularCoeficienteDeAsimetria.js';
 import {
     calcularEstadisticas,
     calcularMedidasDePosicion,
     calcularCoeficienteDeAsimetria,
- } from './puente.js';
+} from './puente.js';
 
-
- export function processData(dataArray, variableType) {
+export function processData(dataArray, variableType) {
     let processedData;
 
     switch (variableType) {
@@ -17,7 +16,7 @@ import {
             return {
                 ...processedData,
                 estadisticas: calcularEstadisticas(processedData.result, variableType),
-                cuartiles : calcularMedidasDePosicion(processedData.result, variableType),
+                cuartiles: calcularMedidasDePosicion(processedData.result, variableType),
                 asimetria: calcularCoeficienteDeAsimetria(processedData.result, variableType)
             };
 
@@ -27,7 +26,7 @@ import {
                 ...processedData,
                 estadisticas: calcularEstadisticas(dataArray, variableType),
                 cuartiles: calcularMedidasDePosicion(dataArray, variableType),
-                asimetria : calcularCoeficienteDeAsimetria(dataArray, variableType),
+                asimetria: calcularCoeficienteDeAsimetria(dataArray, variableType),
             };
 
         case 'cualitativa':
@@ -38,8 +37,6 @@ import {
             throw new Error('Tipo de variable no reconocido');
     }
 }
-
-
 
 // Procesar variables cualitativas y cuantitativas discretas
 function processDiscreteOrQualitativeData(dataArray, variableType) {
@@ -74,8 +71,8 @@ function processDiscreteOrQualitativeData(dataArray, variableType) {
 
         const relativeFrequency = absoluteFrequency / totalFrequency;
         cumulativeRelativeFrequency += relativeFrequency;
-        totalRelativeFrequency+=relativeFrequency;
-        totalPorcentaje += (relativeFrequency *100);
+        totalRelativeFrequency += relativeFrequency;
+        totalPorcentaje += (relativeFrequency * 100);
 
         return {
             value,
@@ -88,44 +85,55 @@ function processDiscreteOrQualitativeData(dataArray, variableType) {
         };
     });
 
-    totalRelativeFrequency = parseFloat(totalRelativeFrequency.toFixed(escogerPrecision()))
-
-    totalPorcentaje = parseFloat(totalPorcentaje.toFixed(escogerPrecision()));
+    totalRelativeFrequency = parseFloat(totalRelativeFrequency.toFixed(escogerPrecision()));
+    totalPorcentaje        = parseFloat(totalPorcentaje.toFixed(escogerPrecision()));
 
     return { result, totalFrequency, totalRelativeFrequency, totalPorcentaje };
 }
 
 export function escogerPrecision() {
-    let select = parseInt(document.getElementById("presicion").value);
-    return select
+    return parseInt(document.getElementById("presicion").value, 10);
+}
+
+/**
+ * Redondea siempre hacia arriba a N decimales.
+ */
+function roundUp(number, decimals) {
+    const factor = Math.pow(10, decimals);
+    return Math.ceil((number + Number.EPSILON) * factor) / factor;
 }
 
 // Procesar variables cuantitativas continuas con intervalos
 function processContinuousData(dataArray) {
     let totalPorcentaje = 0;
     let totalRelativeFrequency = 0;
-    const numericData = dataArray.map(item => item === "" ? 0 : Number(item)).filter(item => !isNaN(item));
+
+    const precision = escogerPrecision();
+    const numericData = dataArray
+        .map(item => item === "" ? 0 : Number(item))
+        .filter(item => !isNaN(item));
+
     const min = Math.min(...numericData);
     const max = Math.max(...numericData);
     const range = max - min;
 
     const n = numericData.length;
     const k = Math.round(1 + 3.322 * Math.log10(n)); // Regla de Sturges
-    
-    const intervalWidth = parseFloat((range / k));
-    intervalWidth.toFixed(escogerPrecision());
+
+    // aquí se aplica roundUp al ancho de intervalo
+    const rawWidth = range / k;
+    const intervalWidth = roundUp(rawWidth, precision);
 
     const intervals = [];
     let start = min;
-
     for (let i = 0; i < k; i++) {
         const end = start + intervalWidth;
-        intervals.push({ 
+        intervals.push({
             m: i + 1,
-            Li: start.toFixed(escogerPrecision()),
-            Ls: end.toFixed(escogerPrecision()),
-            xi: ((start + end) / 2).toFixed(escogerPrecision()),
-            frequency: 0 
+            Li: start.toFixed(precision),
+            Ls: end.toFixed(precision),
+            xi: ((start + end) / 2).toFixed(precision),
+            frequency: 0
         });
         start = end;
     }
@@ -134,13 +142,10 @@ function processContinuousData(dataArray) {
         for (let i = 0; i < intervals.length; i++) {
             const lower = parseFloat(intervals[i].Li);
             const upper = parseFloat(intervals[i].Ls);
-            if (value >= lower && value < upper) {
+            if ((value >= lower && value < upper) ||
+                (i === intervals.length - 1 && value === upper)) {
                 intervals[i].frequency += 1;
                 break;
-            }
-            // Para incluir el último valor exacto en el último intervalo
-            if (i === intervals.length - 1 && value === upper) {
-                intervals[i].frequency += 1;
             }
         }
     });
@@ -153,7 +158,7 @@ function processContinuousData(dataArray) {
         const relativeFrequency = interval.frequency / n;
         cumulativeRelativeFrequency += relativeFrequency;
         totalRelativeFrequency += relativeFrequency;
-        totalPorcentaje+=(relativeFrequency *100);
+        totalPorcentaje += (relativeFrequency * 100);
 
         return {
             m: interval.m,
@@ -162,14 +167,17 @@ function processContinuousData(dataArray) {
             xi: interval.xi,
             frequency: interval.frequency,
             cumulativeFrequency,
-            relativeFrequency: relativeFrequency.toFixed(escogerPrecision()),
-            cumulativeRelativeFrequency: cumulativeRelativeFrequency.toFixed(escogerPrecision()),
-            percentage: (relativeFrequency * 100).toFixed(escogerPrecision()),
-            cumulativePercentage: (cumulativeRelativeFrequency * 100).toFixed(escogerPrecision())
+            relativeFrequency: relativeFrequency.toFixed(precision),
+            cumulativeRelativeFrequency: cumulativeRelativeFrequency.toFixed(precision),
+            percentage: (relativeFrequency * 100).toFixed(precision),
+            cumulativePercentage: (cumulativeRelativeFrequency * 100).toFixed(precision)
         };
     });
 
-        totalPorcentaje = totalPorcentaje.toFixed(escogerPrecision()) 
-        totalRelativeFrequency =  totalRelativeFrequency.toFixed(escogerPrecision())
-    return { result, totalFrequency: n , totalRelativeFrequency, totalPorcentaje};
+    return {
+        result,
+        totalFrequency: n,
+        totalRelativeFrequency: totalRelativeFrequency.toFixed(precision),
+        totalPorcentaje: totalPorcentaje.toFixed(precision)
+    };
 }
