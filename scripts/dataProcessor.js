@@ -5,6 +5,9 @@ import {
     calcularCoeficienteDeAsimetria,
  } from './puente.js';
 
+ import { roundingUp } from '../utils/rededondearAplitud.js';
+
+ import { getMaxDecimals } from '../utils/decimalesMaximos.js';
 
  export function processData(dataArray, variableType) {
     let processedData;
@@ -102,29 +105,60 @@ export function escogerPrecision() {
 
 // Procesar variables cuantitativas continuas con intervalos
 function processContinuousData(dataArray) {
+    
     let totalPorcentaje = 0;
     let totalRelativeFrequency = 0;
+
     const numericData = dataArray.map(item => item === "" ? 0 : Number(item)).filter(item => !isNaN(item));
+    let maxDecimals = getMaxDecimals(numericData);
+    console.log('decimales maximos: '+ maxDecimals);
     const min = Math.min(...numericData);
     const max = Math.max(...numericData);
+    console.log('max: '+ max);
+    console.log('min: ' + min);
     const range = max - min;
-
-    const n = numericData.length;
-    const k = Math.round(1 + 3.322 * Math.log10(n)); // Regla de Sturges
+    console.log('rango: ' + range);
     
-    const intervalWidth = parseFloat((range / k));
-    intervalWidth.toFixed(escogerPrecision());
+    const n = numericData.length;
+    const rawK = 1 + 3.322 * Math.log10(n); // Regla de Sturges
+
+   
+    const k = roundingUp(rawK,0)
+
+    console.log('itervaLOS: ' + k);
+
+    const intervalWidth = (range / k);
+    console.log('Intervalos antes: '+intervalWidth);
+
+    let intervalWidthFinal = intervalWidth;
+
+    if((intervalWidth - Math.round(intervalWidth ) ) !== 0){
+
+        intervalWidthFinal = roundingUp(intervalWidth,maxDecimals);
+        console.log('entrooooooo');
+    }else{
+        intervalWidthFinal = intervalWidthFinal + 0.1;
+        maxDecimals += 1;
+        console.log('maxdecimal'+ maxDecimals);
+        console.log('onioooo: ' + intervalWidthFinal);
+    }
+ console.log('intervalos redondeadps: ' + intervalWidthFinal);
 
     const intervals = [];
+
     let start = min;
 
     for (let i = 0; i < k; i++) {
-        const end = start + intervalWidth;
+        let end = start + intervalWidthFinal;
+        console.log(end);
+
+        end = roundingUp(end,3);
+
         intervals.push({ 
             m: i + 1,
-            Li: start.toFixed(escogerPrecision()),
-            Ls: end.toFixed(escogerPrecision()),
-            xi: ((start + end) / 2).toFixed(escogerPrecision()),
+            Li: start.toFixed(maxDecimals),
+            Ls: end.toFixed(maxDecimals),
+            xi: ((start + end) / 2).toFixed(maxDecimals),
             frequency: 0 
         });
         start = end;
@@ -162,14 +196,14 @@ function processContinuousData(dataArray) {
             xi: interval.xi,
             frequency: interval.frequency,
             cumulativeFrequency,
-            relativeFrequency: relativeFrequency.toFixed(escogerPrecision()),
-            cumulativeRelativeFrequency: cumulativeRelativeFrequency.toFixed(escogerPrecision()),
-            percentage: (relativeFrequency * 100).toFixed(escogerPrecision()),
-            cumulativePercentage: (cumulativeRelativeFrequency * 100).toFixed(escogerPrecision())
+            relativeFrequency: relativeFrequency.toFixed(maxDecimals),
+            cumulativeRelativeFrequency: cumulativeRelativeFrequency.toFixed(maxDecimals),
+            percentage: (relativeFrequency * 100).toFixed(maxDecimals),
+            cumulativePercentage: (cumulativeRelativeFrequency * 100).toFixed(maxDecimals)
         };
     });
 
-        totalPorcentaje = totalPorcentaje.toFixed(escogerPrecision()) 
-        totalRelativeFrequency =  totalRelativeFrequency.toFixed(escogerPrecision())
+        totalPorcentaje = totalPorcentaje.toFixed(maxDecimals) 
+        totalRelativeFrequency =  totalRelativeFrequency.toFixed(maxDecimals)
     return { result, totalFrequency: n , totalRelativeFrequency, totalPorcentaje};
 }
