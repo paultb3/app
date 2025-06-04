@@ -30,7 +30,7 @@
 
 - **Frontend:** HTML, CSS, JavaScript.
 - **Backend:** JavaScript.
-- **Herramientas:** Git, Node.js, VSCode.
+- **Herramientas:** Git, VSCode.
 
 ---
 
