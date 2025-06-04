@@ -34,7 +34,7 @@
 
 ---
 
-## 🚀 Puedes Importar usar online
+## 🚀 Puedes usar online
 
 1️⃣ Ingresar al link:
 
