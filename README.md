@@ -2,7 +2,7 @@
 
 [![Estado del Proyecto](https://img.shields.io/badge/Estado-En%20Desarrollo-blue)]()
 [![Licencia](https://img.shields.io/badge/Licencia-MIT-green)]()
-[![Última actualización](https://img.shields.io/github/last-commit/usuario/repositorio)]()
+[![Última actualización](https://img.shields.io/github/last-commit/paultb3/app)]()
 
 ---
 
