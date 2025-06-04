@@ -20,9 +20,9 @@
 
 ## 📷 Vistas
 
-| 💻 Vista Escritorio                           | 📱 Vista Móvil                         |
+| 💻 Vista Escritorio                           | 📱 Vista Móvil                        |
 | --------------------------------------------- | -------------------------------------- |
-| ![Escritorio](./assets/images/escritorio.png) | ![Móvil](./assets/images/mobile.jpeg/) |
+| ![Escritorio](./assets/images/mod_desktop.png) | ![Móvil](./assets/images/mod_movil.jpg) |
 
 ---
 
