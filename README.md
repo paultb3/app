@@ -44,8 +44,3 @@ https://paultb3.github.io/app
 
 ```
 
----
-
-## NOTA
-
-- Es necesario implementar diseño responsivo par la version mobile
